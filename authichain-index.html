@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<title>AuthiChain — The Truth Layer for the Global Economy</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        base: { 900: '#0a0f1a', 800: '#0f172a', 700: '#1e293b', 600: '#334155' },
+        cyan: { 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2' },
+        blue: { 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb' },
+        fore: { 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8' },
+        green: { 500: '#22c55e', 600: '#16a34a' },
+        red: { 500: '#dc2626' },
+        purple: { 500: '#8b5cf6', 600: '#7c3aed' },
+      },
+    },
+  },
+};
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+:root {
+  --cyan: #06b6d4;
+  --cyan-light: #22d3ee;
+  --blue: #3b82f6;
+  --base-900: #0a0f1a;
+  --base-800: #0f172a;
+  --base-700: #1e293b;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--base-900); color: #f1f5f9; }
+
+/* Glassmorphism nav */
+.glass-nav { background: rgba(10,15,26,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(6,182,212,0.1); }
+
+/* Gradient text */
+.gradient-text { background: linear-gradient(135deg, #22d3ee, #06b6d4, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* Glow button */
+@keyframes pulseGlow { 0%,100% { box-shadow: 0 0 15px rgba(6,182,212,0.4), 0 0 30px rgba(6,182,212,0.1); } 50% { box-shadow: 0 0 25px rgba(6,182,212,0.6), 0 0 50px rgba(6,182,212,0.2); } }
+.glow-btn { animation: pulseGlow 2.5s ease-in-out infinite; }
+
+/* Animated grid */
+@keyframes gridMove { 0% { transform: translate(0,0); } 100% { transform: translate(40px,40px); } }
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(6,182,212,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6,182,212,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridMove 8s linear infinite;
+}
+
+/* Card hover lift */
+.card-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+
+/* Animated border gradient */
+@keyframes borderRotate { 0% { --angle: 0deg; } 100% { --angle: 360deg; } }
+.animated-border {
+  position: relative;
+  background: #0f172a;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(var(--border-angle, 0deg), #06b6d4, #3b82f6, #8b5cf6, #06b6d4);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Pipeline particle animation */
+@keyframes flowParticle { 0% { left: 0; opacity:0; } 10% { opacity:1; } 90% { opacity:1; } 100% { left: 100%; opacity:0; } }
+.pipeline-flow { position: relative; }
+.pipeline-flow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 10px #06b6d4;
+  animation: flowParticle 3s linear infinite;
+  transform: translateY(-50%);
+}
+
+/* Reveal animation */
+@keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Stack layer reveal */
+@keyframes stackReveal { from { opacity:0; transform:translateX(-40px); } to { opacity:1; transform:translateX(0); } }
+
+/* Counter tabular */
+.counter-num { font-variant-numeric: tabular-nums; }
+
+/* Code block styling */
+.code-block { background: #0a0f1a; border: 1px solid rgba(6,182,212,0.15); font-family: 'Courier New', monospace; }
+.code-method { color: #22d3ee; font-weight: 700; }
+.code-path { color: #22c55e; }
+.code-comment { color: #64748b; }
+
+/* Toast */
+@keyframes slideIn { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
+@keyframes slideOut { from { transform:translateX(0); opacity:1; } to { transform:translateX(100%); opacity:0; } }
+.toast-in { animation: slideIn 0.4s ease forwards; }
+.toast-out { animation: slideOut 0.4s ease forwards; }
+
+/* Section gradient dividers */
+.section-divider { background: linear-gradient(90deg, transparent, rgba(6,182,212,0.3), transparent); height: 1px; }
+
+/* Staking table */
+.stake-table tr { border-bottom: 1px solid rgba(6,182,212,0.1); }
+.stake-table th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; }
+
+/* Timeline */
+.timeline-dot { width: 16px; height: 16px; border-radius: 50%; border: 3px solid #06b6d4; background: #0f172a; }
+.timeline-line { width: 2px; background: linear-gradient(to bottom, #06b6d4, rgba(6,182,212,0.1)); }
+
+/* Lock shimmer */
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.shimmer-card { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%); background-size: 200% 100%; animation: shimmer 3s ease infinite; }
+</style>
+</head>
+<body data-id="0">
+<app-icon data-id="1" hidden data-icon="shield-check" data-palette="Dark"></app-icon>
+<app-disclaimer data-id="2" intent="financial"></app-disclaimer>
+
+<!-- NAVIGATION -->
+<header data-id="3" id="navbar-hdr1" class="glass-nav fixed top-0 left-0 right-0 z-50">
+  <div data-id="4" class="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between h-16">
+    <a data-id="5" href="#hero" id="logo-lnk1" class="flex items-center gap-2 text-xl font-black tracking-tight">
+      <span data-id="6" class="text-2xl">⛓️</span>
+      <span data-id="7" class="gradient-text">AUTHICHAIN</span>
+    </a>
+    <nav data-id="8" id="desktop-nav-n1" class="hidden md:flex items-center gap-6 text-sm font-medium text-fore-300">
+      <a data-id="9" href="#protocol" class="hover:text-cyan-400 transition-colors">Protocol</a>
+      <a data-id="10" href="#technology" class="hover:text-cyan-400 transition-colors">Technology</a>
+      <a data-id="11" href="#verticals" class="hover:text-cyan-400 transition-colors">Verticals</a>
+      <a data-id="12" href="#qron" class="hover:text-cyan-400 transition-colors">QRON</a>
+      <a data-id="13" href="#enterprise" class="hover:text-cyan-400 transition-colors">Enterprise</a>
+      <a data-id="14" href="#security" class="hover:text-cyan-400 transition-colors">Security</a>
+    </nav>
+    <div data-id="15" class="flex items-center gap-3">
+      <a data-id="16" href="#pricing" id="cta-nav-btn1" class="hidden md:inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-base-900 font-bold text-sm px-5 py-2.5 rounded-lg glow-btn transition-colors">Get Started</a>
+      <button data-id="17" id="mobile-menu-btn-m1" class="md:hidden p-2 text-fore-200" aria-label="Open menu">
+        <svg data-id="18" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path data-id="19" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<nav data-id="20" id="mobile-menu-m1" class="hidden fixed inset-0 bg-base-900/98 z-[60] flex flex-col items-center justify-center gap-6 text-lg font-semibold text-fore-100">
+  <button data-id="21" id="mobile-close-btn-m1" class="absolute top-5 right-5 p-2 text-fore-300" aria-label="Close menu">
+    <svg data-id="22" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path data-id="23" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <a data-id="24" href="#protocol" class="mobile-nav-link hover:text-cyan-400 transition-colors">Protocol</a>
+  <a data-id="25" href="#technology" class="mobile-nav-link hover:text-cyan-400 transition-colors">Technology</a>
+  <a data-id="26" href="#verticals" class="mobile-nav-link hover:text-cyan-400 transition-colors">Verticals</a>
+  <a data-id="27" href="#qron" class="mobile-nav-link hover:text-cyan-400 transition-colors">QRON</a>
+  <a data-id="28" href="#enterprise" class="mobile-nav-link hover:text-cyan-400 transition-colors">Enterprise</a>
+  <a data-id="29" href="#security" class="mobile-nav-link hover:text-cyan-400 transition-colors">Security</a>
+  <a data-id="30" href="#pricing" class="bg-cyan-500 text-base-900 font-bold px-8 py-3 rounded-lg glow-btn mobile-nav-link">Get Started</a>
+</nav>
+
+<main data-id="31">
+
+<!-- SECTION 1: HERO -->
+<section data-id="32" id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16" style="background: linear-gradient(135deg, #0a0f1a 0%, #0f172a 50%, #0a0f1a 100%);">
+  <div data-id="33" class="hero-grid absolute inset-0 opacity-60"></div>
+  <div data-id="34" class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(6,182,212,0.06) 0%, transparent 70%);"></div>
+  <div data-id="35" class="relative z-10 max-w-5xl mx-auto px-4 md:px-6 text-center">
+    <div data-id="36" class="reveal">
+      <h1 data-id="37" id="hero-title-h1" class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight mb-6">
+        <span data-id="38" class="gradient-text">The Truth Layer</span><br data-id="39"/>
+        <span data-id="40" class="text-fore-100">for the Global Economy</span>
+      </h1>
+      <p data-id="41" id="hero-sub-p1" class="text-base md:text-lg lg:text-xl text-fore-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+        AuthiChain is the decentralized protocol that serves as the source of truth for products and assets. Edge-distributed verification. Immutable provenance. Enterprise-grade automation.
+      </p>
+      <div data-id="42" class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+        <a data-id="43" href="#protocol" id="cta-explore-a1" class="bg-cyan-500 hover:bg-cyan-600 text-base-900 font-bold px-8 py-3.5 rounded-lg glow-btn transition-colors text-sm md:text-base">Explore the Protocol</a>
+        <a data-id="44" href="#enterprise" id="cta-demo-a1" class="border border-fore-300 hover:border-cyan-400 text-fore-100 hover:text-cyan-400 font-semibold px-8 py-3.5 rounded-lg transition-colors text-sm md:text-base">Enterprise Demo</a>
+      </div>
+    </div>
+
+    <!-- STAT COUNTERS -->
+    <div data-id="45" id="stats-row-d1" class="reveal grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
+      <div data-id="46" class="bg-base-800/60 backdrop-blur rounded-xl p-4 md:p-6 border border-base-600/30">
+        <div data-id="47" class="text-2xl md:text-4xl font-black gradient-text counter-num" data-target="2400000" data-prefix="" data-suffix="+">0</div>
+        <div data-id="48" class="text-xs md:text-sm text-fore-400 mt-1">Verifications Processed</div>
+      </div>
+      <div data-id="49" class="bg-base-800/60 backdrop-blur rounded-xl p-4 md:p-6 border border-base-600/30">
+        <div data-id="50" class="text-2xl md:text-4xl font-black gradient-text counter-num" data-target="2" data-prefix="<" data-suffix="s">0</div>
+        <div data-id="51" class="text-xs md:text-sm text-fore-400 mt-1">Global Response Time</div>
+      </div>
+      <div data-id="52" class="bg-base-800/60 backdrop-blur rounded-xl p-4 md:p-6 border border-base-600/30">
+        <div data-id="53" class="text-2xl md:text-4xl font-black gradient-text counter-num" data-target="300" data-prefix="" data-suffix="+">0</div>
+        <div data-id="54" class="text-xs md:text-sm text-fore-400 mt-1">Edge Locations</div>
+      </div>
+      <div data-id="55" class="bg-base-800/60 backdrop-blur rounded-xl p-4 md:p-6 border border-base-600/30">
+        <div data-id="56" class="text-2xl md:text-4xl font-black gradient-text counter-num" data-target="99.99" data-prefix="" data-suffix="%">0</div>
+        <div data-id="57" class="text-xs md:text-sm text-fore-400 mt-1">Uptime SLA</div>
+      </div>
+    </div>
+
+    <!-- Badge row -->
+    <div data-id="58" class="reveal flex flex-wrap items-center justify-center gap-2 md:gap-3 text-xs text-fore-400 mb-10">
+      <span data-id="59" class="bg-base-700/60 px-3 py-1.5 rounded-full border border-base-600/30">Built on Polygon</span>
+      <span data-id="60" class="bg-base-700/60 px-3 py-1.5 rounded-full border border-base-600/30">Cloudflare Edge</span>
+      <span data-id="61" class="bg-base-700/60 px-3 py-1.5 rounded-full border border-base-600/30">Supabase</span>
+      <span data-id="62" class="bg-base-700/60 px-3 py-1.5 rounded-full border border-base-600/30">Zero-Trust Architecture</span>
+    </div>
+
+    <!-- Founder quote -->
+    <div data-id="63" class="reveal max-w-2xl mx-auto">
+      <blockquote data-id="64" class="relative bg-base-800/40 backdrop-blur border border-base-600/20 rounded-2xl p-6 md:p-8">
+        <div data-id="65" class="absolute -top-3 left-6 text-cyan-500 text-4xl font-serif">"</div>
+        <p data-id="66" class="text-fore-200 text-sm md:text-base italic leading-relaxed">
+          We are building the authentication layer for the physical world. Our product, QRON, transforms physical items into scannable identities.
+        </p>
+        <div data-id="67" class="mt-4 text-xs text-fore-400 font-medium">— Founder, AuthiChain</div>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<div data-id="68" class="section-divider"></div>
+
+<!-- SECTION 2: THE PROBLEM -->
+<section data-id="69" id="protocol" class="py-20 md:py-28" style="background: linear-gradient(180deg, #0a0f1a, #0f172a);">
+  <div data-id="70" class="max-w-6xl mx-auto px-4 md:px-6">
+    <div data-id="71" class="text-center mb-14 reveal">
+      <p data-id="72" class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Why Authentication Matters</p>
+      <h2 data-id="73" id="problem-title-h2" class="text-3xl md:text-5xl font-black text-fore-100 mb-4">Counterfeiting is a <span data-id="74" class="gradient-text">$2.3 Trillion</span> Problem</h2>
+    </div>
+    <div data-id="75" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div data-id="76" class="reveal card-lift bg-base-800/60 backdrop-blur border border-base-600/30 rounded-2xl p-6 md:p-8">
+        <div data-id="77" class="text-3xl mb-4">🔍</div>
+        <h3 data-id="78" class="text-lg font-bold text-fore-100 mb-2">Supply Chain Opacity</h3>
+        <p data-id="79" class="text-fore-400 text-sm leading-relaxed">Brands can't verify products after they leave the factory. The chain of custody becomes invisible the moment goods ship.</p>
+      </div>
+      <div data-id="80" class="reveal card-lift bg-base-800/60 backdrop-blur border border-base-600/30 rounded-2xl p-6 md:p-8" style="transition-delay:0.1s;">
+        <div data-id="81" class="text-3xl mb-4">😟</div>
+        <h3 data-id="82" class="text-lg font-bold text-fore-100 mb-2">Consumer Distrust</h3>
+        <p data-id="83" class="text-fore-400 text-sm leading-relaxed">87% of consumers say they can't tell real from fake. Trust in product authenticity is at an all-time low.</p>
+      </div>
+      <div data-id="84" class="reveal card-lift bg-base-800/60 backdrop-blur border border-base-600/30 rounded-2xl p-6 md:p-8" style="transition-delay:0.2s;">
+        <div data-id="85" class="text-3xl mb-4">📋</div>
+        <h3 data-id="86" class="text-lg font-bold text-fore-100 mb-2">Regulatory Gaps</h3>
+        <p data-id="87" class="text-fore-400 text-sm leading-relaxed">Compliance systems are siloed, paper-based, and exploitable. Fraud slips through fragmented oversight.</p>
+      </div>
+    </div>
+    <div data-id="88" class="reveal text-center">
+      <div data-id="89" class="inline-block bg-base-800/60 backdrop-blur border border-cyan-500/20 rounded-2xl p-6 md:p-8 max-w-3xl">
+        <p data-id="90" class="text-fore-200 text-base md:text-lg leading-relaxed">
+          AuthiChain replaces trust with <strong data-id="91" class="text-cyan-400">truth</strong>. Every product gets a verifiable, blockchain-anchored identity that anyone can check in <strong data-id="92" class="text-cyan-400">under 2 seconds</strong>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-id="93" class="section-divider"></div>
+
+<!-- SECTION 3: TECHNOLOGY -->
+<section data-id="94" id="technology" class="py-20 md:py-28 bg-base-900">
+  <div data-id="95" class="max-w-6xl mx-auto px-4 md:px-6">
+    <div data-id="96" class="text-center mb-14 reveal">
+      <p data-id="97" class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Technology</p>
+      <h2 data-id="98" id="tech-title-h2" class="text-3xl md:text-5xl font-black text-fore-100">Edge-Distributed Verification in <span data-id="99" class="gradient-text">&lt;2 Seconds</span></h2>
+    </div>
+
+    <!-- Pipeline -->
+    <div data-id="100" class="reveal mb-16 overflow-x-auto pb-4">
+      <div data-id="101" class="flex items-stretch gap-0 min-w-[900px] md:min-w-0">
+        <div data-id="102" class="flex-1 text-center bg-base-800/60 border border-base-600/30 rounded-l-2xl p-4 relative">
+          <div data-id="103" class="text-2xl mb-2">📸</div>
+          <h4 data-id="104" class="text-xs font-bold text-cyan-400 mb-1">Image Capture</h4>
+          <p data-id="105" class="text-[10px] text-fore-400 leading-tight">User scans product → image uploaded to edge</p>
+          <div data-id="106" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-5 h-5 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/40 hidden md:block"></div>
+        </div>
+        <div data-id="107" class="flex-1 text-center bg-base-800/60 border border-base-600/30 p-4 relative">
+          <div data-id="108" class="text-2xl mb-2">🧠</div>
+          <h4 data-id="109" class="text-xs font-bold text-cyan-400 mb-1">AI Analysis</h4>
+          <p data-id="110" class="text-[10px] text-fore-400 leading-tight">Vision model checks micro-features, patterns, defects</p>
+          <div data-id="111" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-5 h-5 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/40 hidden md:block"></div>
+        </div>
+        <div data-id="112" class="flex-1 text-center bg-base-800/60 border border-base-600/30 p-4 relative">
+          <div data-id="113" class="text-2xl mb-2">🔐</div>
+          <h4 data-id="114" class="text-xs font-bold text-cyan-400 mb-1">Hashing</h4>
+          <p data-id="115" class="text-[10px] text-fore-400 leading-tight">Product signature generated & fingerprinted</p>
+          <div data-id="116" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-5 h-5 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/40 hidden md:block"></div>
+        </div>
+        <div data-id="117" class="flex-1 text-center bg-base-800/60 border border-base-600/30 p-4 relative">
+          <div data-id="118" class="text-2xl mb-2">⛓️</div>
+          <h4 data-id="119" class="text-xs font-bold text-cyan-400 mb-1">Provenance Lookup</h4>
+          <p data-id="120" class="text-[10px] text-fore-400 leading-tight">Signature compared against blockchain record</p>
+          <div data-id="121" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-5 h-5 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/40 hidden md:block"></div>
+        </div>
+        <div data-id="122" class="flex-1 text-center bg-base-800/60 border border-base-600/30 p-4 relative">
+          <div data-id="123" class="text-2xl mb-2">⚖️</div>
+          <h4 data-id="124" class="text-xs font-bold text-cyan-400 mb-1">Decision Engine</h4>
+          <p data-id="125" class="text-[10px] text-fore-400 leading-tight">Authentic / Suspicious / Fraudulent</p>
+          <div data-id="126" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-5 h-5 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/40 hidden md:block"></div>
+        </div>
+        <div data-id="127" class="flex-1 text-center bg-base-800/60 border border-base-600/30 rounded-r-2xl p-4">
+          <div data-id="128" class="text-2xl mb-2">✅</div>
+          <h4 data-id="129" class="text-xs font-bold text-cyan-400 mb-1">Response</h4>
+          <p data-id="130" class="text-[10px] text-fore-400 leading-tight">Result returned in &lt;2 seconds globally</p>
+        </div>
+      </div>
+      <!-- Animated flow bar under pipeline -->
+      <div data-id="131" class="relative h-1 bg-base-700 rounded-full mt-4 overflow-hidden min-w-[900px] md:min-w-0">
+        <div data-id="132" class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-transparent via-cyan-400 to-transparent rounded-full" style="animation: flowParticle 2.5s linear infinite;"></div>
+      </div>
+    </div>
+
+    <!-- Architecture cards -->
+    <div data-id="133" class="reveal text-center mb-8">
+      <h3 data-id="134" class="text-xl md:text-2xl font-bold text-fore-100">Cloud-Native Architecture</h3>
+    </div>
+    <div data-id="135" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div data-id="136" class="reveal card-lift bg-base-800/60 backdrop-blur border border-base-600/30 rounded-2xl p-6">
+        <div data-id="137" class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4"><span data-id="138" class="text-xl">☁️</span></div>
+        <h4 data-id="139" class="font-bold text-fore-100 text-sm mb-2">Cloudflare Workers</h4>
+        <p data-id="140" class="text-fore-400 text-xs leading-relaxed">300+ edge locations, sub-50ms cold starts, zero-maintenance scaling</p>
+      </div>
+      <div data-id="141" class="reveal card-lift bg-base-800/60 backdrop-blur border border-base-600/30 rounded-2xl p-6" style="transition-delay:0.1s;">
+        <div data-id="142" class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-4"><span data-id="143" class="text-xl">🗄️</span></div>
+        <h4 data-id="144" class="font-bold text-fore-100 text-sm mb-2">Supabase</h4>
+        <p data-id="145" class="text-fore-400 text-xs leading-relaxed">Postgres + Auth + Realtime + Row-level security</p>
+      </div>
+      <div data-id="146" class="reveal card-lift bg-base-800/60 backdrop-blur border border-base-600/30 rounded-2xl p-6" style="transition-delay:0.2s;">
+        <div data-id="147" class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4"><span data-id="148" class="text-xl">⛓️</span></div>
+        <h4 data-id="149" class="font-bold text-fore-100 text-sm mb-2">Polygon Blockchain</h4>
+        <p data-id="150" class="text-fore-400 text-xs leading-relaxed">Immutable provenance anchoring, only hashes stored on-chain</p>
+      </div>
+      <div data-id="151" class="reveal card-lift bg-base-800/60 backdrop-blur border border-base-600/30 rounded-2xl p-6" style="transition-delay:0.3s;">
+        <div data-id="152" class="w-10 h-10 rounded-lg bg-blue-400/10 flex items-center justify-center mb-4"><span data-id="153" class="text-xl">👁️</span></div>
+        <h4 data-id="154" class="font-bold text-fore-100 text-sm mb-2">AI Vision Layer</h4>
+        <p data-id="155" class="text-fore-400 text-xs leading-relaxed">Multi-modal authentication: image + sensor data fusion</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-id="156" class="section-divider"></div>
+
+<!-- SECTION 4: VERTICALS -->
+<section data-id="157" id="verticals" class="py-20 md:py-28" style="background: linear-gradient(180deg, #0f172a, #0a0f1a);">
+  <div data-id="158" class="max-w-6xl mx-auto px-4 md:px-6">
+    <div data-id="159" class="text-center mb-14 reveal">
+      <p data-id="160" class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Industry Verticals</p>
+      <h2 data-id="161" id="vert-title-h2" class="text-3xl md:text-5xl font-black text-fore-100">One Protocol. <span data-id="162" class="gradient-text">Multiple Truth Layers.</span></h2>
+    </div>
+
+    <div data-id="163" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <!-- StrainChain -->
+      <div data-id="164" class="reveal card-lift rounded-2xl p-6 md:p-8 border relative overflow-hidden" style="background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(10,15,26,0.9)); border-color: rgba(34,197,94,0.25);">
+        <div data-id="165" class="text-4xl mb-4">🌿</div>
+        <h3 data-id="166" class="text-xl font-black text-green-500 mb-2">StrainChain</h3>
+        <p data-id="167" class="text-sm font-semibold text-fore-200 mb-3">Cannabis Provenance</p>
+        <p data-id="168" class="text-fore-400 text-sm leading-relaxed mb-5">Blockchain-verified seed-to-sale tracking integrated with METRC. NFT certificates for every strain. Live in Michigan.</p>
+        <span data-id="169" class="text-green-500 text-sm font-semibold hover:underline cursor-pointer">Visit strainchain.io →</span>
+      </div>
+      <!-- GovChain -->
+      <div data-id="170" class="reveal card-lift rounded-2xl p-6 md:p-8 border relative overflow-hidden" style="background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(10,15,26,0.9)); border-color: rgba(59,130,246,0.25); transition-delay:0.1s;">
+        <div data-id="171" class="text-4xl mb-4">🏛️</div>
+        <h3 data-id="172" class="text-xl font-black text-blue-500 mb-2">GovChain</h3>
+        <p data-id="173" class="text-sm font-semibold text-fore-200 mb-3">Government Verification</p>
+        <p data-id="174" class="text-fore-400 text-sm leading-relaxed mb-5">Document authentication, credential verification, and regulatory compliance for federal, state, and local agencies.</p>
+        <span data-id="175" class="text-blue-400 text-sm font-semibold hover:underline cursor-pointer">Visit govchain.us →</span>
+      </div>
+      <!-- QRON Studio -->
+      <div data-id="176" class="reveal card-lift rounded-2xl p-6 md:p-8 border relative overflow-hidden" style="background: linear-gradient(135deg, rgba(139,92,246,0.05), rgba(10,15,26,0.9)); border-color: rgba(139,92,246,0.25); transition-delay:0.2s;">
+        <div data-id="177" class="text-4xl mb-4">🔮</div>
+        <h3 data-id="178" class="text-xl font-black text-purple-500 mb-2">QRON Studio</h3>
+        <p data-id="179" class="text-sm font-semibold text-fore-200 mb-3">Artistic QR Experience</p>
+        <p data-id="180" class="text-fore-400 text-sm leading-relaxed mb-5">AI-generated cinematic QR codes with blockchain-anchored provenance. The consumer-facing authentication experience.</p>
+        <span data-id="181" class="text-purple-500 text-sm font-semibold hover:underline cursor-pointer">Visit qron.space →</span>
+      </div>
+    </div>
+
+    <!-- Coming Soon -->
+    <div data-id="182" class="reveal">
+      <p data-id="183" class="text-center text-fore-400 text-sm font-semibold mb-5 uppercase tracking-widest">Coming Soon</p>
+      <div data-id="184" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div data-id="185" class="shimmer-card rounded-xl p-5 text-center border border-base-600/20">
+          <div data-id="186" class="text-lg mb-2">🔒</div>
+          <p data-id="187" class="text-fore-300 text-xs font-semibold">Luxury Goods</p>
+        </div>
+        <div data-id="188" class="shimmer-card rounded-xl p-5 text-center border border-base-600/20">
+          <div data-id="189" class="text-lg mb-2">🔒</div>
+          <p data-id="190" class="text-fore-300 text-xs font-semibold">Pharmaceuticals</p>
+        </div>
+        <div data-id="191" class="shimmer-card rounded-xl p-5 text-center border border-base-600/20">
+          <div data-id="192" class="text-lg mb-2">🔒</div>
+          <p data-id="193" class="text-fore-300 text-xs font-semibold">Fine Art</p>
+        </div>
+        <div data-id="194" class="shimmer-card rounded-xl p-5 text-center border border-base-600/20">
+          <div data-id="195" class="text-lg mb-2">🔒</div>
+          <p data-id="196" class="text-fore-300 text-xs font-semibold">Wine & Spirits</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-id="197" class="section-divider"></div>
+
+<!-- SECTION 5: QRON -->
+<section data-id="198" id="qron" class="py-20 md:py-28 relative overflow-hidden" style="background: linear-gradient(180deg, #0a0f1a, #0c1929, #0a0f1a);">
+  <div data-id="199" class="absolute inset-0" style="background: radial-gradient(ellipse 80% 50% at 30% 50%, rgba(6,182,212,0.04), transparent);"></div>
+  <div data-id="200" class="relative z-10 max-w-5xl mx-auto px-4 md:px-6">
+    <div data-id="201" class="text-center mb-14 reveal">
+      <p data-id="202" class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Experience Layer</p>
+      <h2 data-id="203" id="qron-title-h2" class="text-3xl md:text-5xl font-black text-fore-100 mb-4">QRON — Where Verification Becomes <span data-id="204" class="gradient-text">Experience</span></h2>
+      <p data-id="205" class="text-fore-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">QRON is the consumer-facing layer of AuthiChain. It transforms cold verification data into cinematic, story-driven authentication moments.</p>
+    </div>
+
+    <!-- QronCode Stack -->
+    <div data-id="206" class="space-y-4 mb-12">
+      <div data-id="207" class="reveal card-lift bg-base-800/60 backdrop-blur border border-cyan-500/15 rounded-2xl p-5 md:p-6 flex items-start gap-4">
+        <div data-id="208" class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
+          <span data-id="209" class="text-xl">🛡️</span>
+        </div>
+        <div data-id="210">
+          <h4 data-id="211" class="font-bold text-cyan-400 mb-1">TruMark</h4>
+          <p data-id="212" class="text-fore-400 text-sm">Cryptographic digital seal anchored to the blockchain — each product's unforgeable identity.</p>
+        </div>
+      </div>
+      <div data-id="213" class="reveal card-lift bg-base-800/60 backdrop-blur border border-cyan-500/15 rounded-2xl p-5 md:p-6 flex items-start gap-4" style="transition-delay:0.1s;">
+        <div data-id="214" class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+          <span data-id="215" class="text-xl">👁️</span>
+        </div>
+        <div data-id="216">
+          <h4 data-id="217" class="font-bold text-purple-500 mb-1">Magic Eye</h4>
+          <p data-id="218" class="text-fore-400 text-sm">Forensic-level visual fingerprinting using autostereogram depth-shifting technology.</p>
+        </div>
+      </div>
+      <div data-id="219" class="reveal card-lift bg-base-800/60 backdrop-blur border border-cyan-500/15 rounded-2xl p-5 md:p-6 flex items-start gap-4" style="transition-delay:0.2s;">
+        <div data-id="220" class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+          <span data-id="221" class="text-xl">⚙️</span>
+        </div>
+        <div data-id="222">
+          <h4 data-id="223" class="font-bold text-blue-400 mb-1">AutoFlow</h4>
+          <p data-id="224" class="text-fore-400 text-sm">Automated seal generation and deployment pipeline — from brand to blockchain in seconds.</p>
+        </div>
+      </div>
+      <div data-id="225" class="reveal card-lift bg-base-800/60 backdrop-blur border border-cyan-500/15 rounded-2xl p-5 md:p-6 flex items-start gap-4" style="transition-delay:0.3s;">
+        <div data-id="226" class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0">
+          <span data-id="227" class="text-xl">✨</span>
+        </div>
+        <div data-id="228">
+          <h4 data-id="229" class="font-bold text-green-500 mb-1">AI StoryMode</h4>
+          <p data-id="230" class="text-fore-400 text-sm">AI-generated provenance narratives for each product — telling the story of authenticity.</p>
+        </div>
+      </div>
+    </div>
+
+    <div data-id="231" class="reveal text-center">
+      <div data-id="232" class="inline-block bg-base-800/60 backdrop-blur border border-cyan-500/20 rounded-2xl px-6 py-4">
+        <p data-id="233" class="text-fore-200 text-sm md:text-base font-medium">Every scan triggers a <strong data-id="234" class="text-cyan-400">QRON experience</strong> — not just a yes/no answer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-id="235" class="section-divider"></div>
+
+<!-- SECTION 6: API & ENTERPRISE -->
+<section data-id="236" id="enterprise" class="py-20 md:py-28 bg-base-800">
+  <div data-id="237" class="max-w-6xl mx-auto px-4 md:px-6">
+    <div data-id="238" class="text-center mb-14 reveal">
+      <p data-id="239" class="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-3">Developers</p>
+      <h2 data-id="240" id="api-title-h2" class="text-3xl md:text-5xl font-black text-fore-100">Built for <span data-id="241" class="gradient-text">Enterprise Integration</span></h2>
+    </div>
+
+    <div data-id="242" class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <!-- Code Terminal -->
+      <div data-id="243" class="reveal">
+        <div data-id="244" class="code-block rounded-2xl overflow-hidden">
+          <div data-id="245" class="flex items-center gap-2 px-4 py-3 border-b border-base-600/30">
+            <div data-id="246" class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div data-id="247" class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div data-id="248" class="w-3 h-3 rounded-full bg-green-500/80"></div>
+            <span data-id="249" class="ml-2 text-xs text-fore-400 font-mono">api-endpoints.sh</span>
+          </div>
+          <div data-id="250" class="p-5 text-xs md:text-sm leading-loose font-mono overflow-x-auto">
+            <div data-id="251"><span data-id="252" class="code-method">POST</span> <span data-id="253" class="code-path">/api/authenticate</span>  <span data-id="254" class="code-comment"># Verify product authenticity</span></div>
+            <div data-id="255"><span data-id="256" class="code-method">POST</span> <span data-id="257" class="code-path">/api/verify</span>        <span data-id="258" class="code-comment"># Full AI + provenance pipeline</span></div>
+            <div data-id="259"><span data-id="260" class="code-method">GET </span> <span data-id="261" class="code-path">/api/products</span>      <span data-id="262" class="code-comment"># Register & manage SKUs</span></div>
+            <div data-id="263"><span data-id="264" class="code-method">POST</span> <span data-id="265" class="code-path">/api/events</span>        <span data-id="266" class="code-comment"># Supply-chain triggers</span></div>
+            <div data-id="267"><span data-id="268" class="code-method">POST</span> <span data-id="269" class="code-path">/api/stripe/webhook</span> <span data-id="270" class="code-comment"># Billing events</span></div>
+          </div>
+          <div data-id="271" class="px-5 pb-4">
+            <p data-id="272" class="text-[10px] text-fore-400">All endpoints: <span data-id="273" class="text-cyan-400">Edge-native</span> | <span data-id="274" class="text-cyan-400">JSON-based</span> | <span data-id="275" class="text-cyan-400">HMAC + JWT secured</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Integration Cards -->
+      <div data-id="276" class="reveal space-y-4">
+        <div data-id="277" class="card-lift bg-base-700/50 backdrop-blur border border-base-600/30 rounded-xl p-4 flex items-center gap-4">
+          <div data-id="278" class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0"><span data-id="279" class="text-lg">🔗</span></div>
+          <div data-id="280"><h4 data-id="281" class="font-bold text-fore-100 text-sm">REST APIs</h4><p data-id="282" class="text-fore-400 text-xs">Full programmatic access to verification, provenance, and management</p></div>
+        </div>
+        <div data-id="283" class="card-lift bg-base-700/50 backdrop-blur border border-base-600/30 rounded-xl p-4 flex items-center gap-4">
+          <div data-id="284" class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0"><span data-id="285" class="text-lg">🔔</span></div>
+          <div data-id="286"><h4 data-id="287" class="font-bold text-fore-100 text-sm">Webhooks</h4><p data-id="288" class="text-fore-400 text-xs">Real-time event notifications for verification & supply-chain events</p></div>
+        </div>
+        <div data-id="289" class="card-lift bg-base-700/50 backdrop-blur border border-base-600/30 rounded-xl p-4 flex items-center gap-4">
+          <div data-id="290" class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0"><span data-id="291" class="text-lg">📦</span></div>
+          <div data-id="292"><h4 data-id="293" class="font-bold text-fore-100 text-sm">SDKs</h4><p data-id="294" class="text-fore-400 text-xs">JavaScript, Python, Go — get started in minutes</p></div>
+        </div>
+        <div data-id="295" class="card-lift bg-base-700/50 backdrop-blur border border-base-600/30 rounded-xl p-4 flex items-center gap-4">
+          <div data-id="296" class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0"><span data-id="297" class="text-lg">🛒</span></div>
+          <div data-id="298"><h4 data-id="299" class="font-bold text-fore-100 text-sm">POS Plugins</h4><p data-id="300" class="text-fore-400 text-xs">Point-of-sale integration for in-store verification</p></div>
+        </div>
+        <div data-id="301" class="card-lift bg-base-700/50 backdrop-blur border border-base-600/30 rounded-xl p-4 flex items-center gap-4">
+          <div data-id="302" class="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center flex-shrink-0"><span data-id="303" class="text-lg">🏢</span></div>
+          <div data-id="304"><h4 data-id="305" class="font-bold text-fore-100 text-sm">ERP Connectors</h4><p data-id="306" class="text-fore-400 text-xs">SAP, Oracle, NetSuite — enterprise system compatibility</p></div>
+        </div>
+        <div data-id="307" class="mt-6">
+          <a data-id="308" href="#pricing" class="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold text-sm px-6 py-3 rounded-lg transition-colors">Request API Access →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-id="309" class="section-divider"></div>
+
+<!-- SECTION 7: SECURITY -->
+<section data-id="310" id="security" class="py-20 md:py-28 bg-base-900">
+  <div data-id="311" class="max-w-6xl mx-auto px-4 md:px-6">
+    <div data-id="312" class="text-center mb-14 reveal">
+      <p data-id="313" class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Security & Compliance</p>
+      <h2 data-id="314" id="sec-title-h2" class="text-3xl md:text-5xl font-black text-fore-100">Security is Foundational, <span data-id="315" class="gradient-text">Not Optional</span></h2>
+    </div>
+
+    <div data-id="316" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+      <div data-id="317" class="reveal card-lift animated-border rounded-2xl p-6">
+        <div data-id="318" class="relative z-10">
+          <div data-id="319" class="text-2xl mb-3">🛡️</div>
+          <h4 data-id="320" class="font-bold text-fore-100 text-sm mb-2">Zero-Trust Architecture</h4>
+          <p data-id="321" class="text-fore-400 text-xs leading-relaxed">No implicit trust between any components. Every request verified independently.</p>
+        </div>
+      </div>
+      <div data-id="322" class="reveal card-lift animated-border rounded-2xl p-6" style="transition-delay:0.05s;">
+        <div data-id="323" class="relative z-10">
+          <div data-id="324" class="text-2xl mb-3">🔏</div>
+          <h4 data-id="325" class="font-bold text-fore-100 text-sm mb-2">HMAC-Signed Requests</h4>
+          <p data-id="326" class="text-fore-400 text-xs leading-relaxed">Every API call cryptographically signed to prevent tampering.</p>
+        </div>
+      </div>
+      <div data-id="327" class="reveal card-lift animated-border rounded-2xl p-6" style="transition-delay:0.1s;">
+        <div data-id="328" class="relative z-10">
+          <div data-id="329" class="text-2xl mb-3">🎫</div>
+          <h4 data-id="330" class="font-bold text-fore-100 text-sm mb-2">JWT Authentication</h4>
+          <p data-id="331" class="text-fore-400 text-xs leading-relaxed">Token-based user verification with short-lived, rotating credentials.</p>
+        </div>
+      </div>
+      <div data-id="332" class="reveal card-lift animated-border rounded-2xl p-6" style="transition-delay:0.15s;">
+        <div data-id="333" class="relative z-10">
+          <div data-id="334" class="text-2xl mb-3">🏗️</div>
+          <h4 data-id="335" class="font-bold text-fore-100 text-sm mb-2">Edge Isolation</h4>
+          <p data-id="336" class="text-fore-400 text-xs leading-relaxed">Cloudflare worker sandboxing — each request runs in isolation.</p>
+        </div>
+      </div>
+      <div data-id="337" class="reveal card-lift animated-border rounded-2xl p-6" style="transition-delay:0.2s;">
+        <div data-id="338" class="relative z-10">
+          <div data-id="339" class="text-2xl mb-3">⛓️</div>
+          <h4 data-id="340" class="font-bold text-fore-100 text-sm mb-2">Blockchain Anchoring</h4>
+          <p data-id="341" class="text-fore-400 text-xs leading-relaxed">Immutable audit trail for every verification event on Polygon.</p>
+        </div>
+      </div>
+      <div data-id="342" class="reveal card-lift animated-border rounded-2xl p-6" style="transition-delay:0.25s;">
+        <div data-id="343" class="relative z-10">
+          <div data-id="344" class="text-2xl mb-3">🔐</div>
+          <h4 data-id="345" class="font-bold text-fore-100 text-sm mb-2">Encrypted Storage</h4>
+          <p data-id="346" class="text-fore-400 text-xs leading-relaxed">AES-256 at rest, TLS 1.3 in transit. Zero plaintext exposure.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compliance badges -->
+    <div data-id="347" class="reveal flex flex-wrap items-center justify-center gap-4">
+      <div data-id="348" class="bg-base-800/60 border border-cyan-500/15 rounded-xl px-5 py-3 text-center">
+        <p data-id="349" class="text-xs font-bold text-cyan-400">SOC 2 Type II</p>
+        <p data-id="350" class="text-[10px] text-fore-400">In Progress</p>
+      </div>
+      <div data-id="351" class="bg-base-800/60 border border-cyan-500/15 rounded-xl px-5 py-3 text-center">
+        <p data-id="352" class="text-xs font-bold text-green-500">GDPR Ready</p>
+        <p data-id="353" class="text-[10px] text-fore-400">Compliant</p>
+      </div>
+      <div data-id="354" class="bg-base-800/60 border border-cyan-500/15 rounded-xl px-5 py-3 text-center">
+        <p data-id="355" class="text-xs font-bold text-blue-400">HIPAA-Adjacent</p>
+        <p data-id="356" class="text-[10px] text-fore-400">Architecture Ready</p>
+      </div>
+      <div data-id="357" class="bg-base-800/60 border border-cyan-500/15 rounded-xl px-5 py-3 text-center">
+        <p data-id="358" class="text-xs font-bold text-purple-500">Zero PII Storage</p>
+        <p data-id="359" class="text-[10px] text-fore-400">By Design</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-id="360" class="section-divider"></div>
+
+<!-- SECTION 8: $QRON TOKEN -->
+<section data-id="361" id="token" class="py-20 md:py-28" style="background: linear-gradient(180deg, #0f172a, #0a0f1a);">
+  <div data-id="362" class="max-w-6xl mx-auto px-4 md:px-6">
+    <div data-id="363" class="text-center mb-6 reveal">
+      <p data-id="364" class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Token Ecosystem</p>
+      <h2 data-id="365" id="token-title-h2" class="text-3xl md:text-5xl font-black text-fore-100 mb-4">$QRON — The <span data-id="366" class="gradient-text">Revenue-Backed</span> Utility Token</h2>
+      <p data-id="367" class="text-fore-300 text-base max-w-2xl mx-auto leading-relaxed">AuthiChain's token is backed by real protocol revenue — not speculation. $QRON serves as an optional power layer for the authentication economy.</p>
+    </div>
+
+    <!-- Five Pillars -->
+    <div data-id="368" class="reveal space-y-3 mb-12 max-w-3xl mx-auto mt-10">
+      <div data-id="369" class="flex items-center gap-4 bg-base-800/60 border border-cyan-500/15 rounded-xl px-5 py-4">
+        <div data-id="370" class="w-8 h-8 rounded-lg bg-cyan-500/15 flex items-center justify-center flex-shrink-0 text-sm">💰</div>
+        <div data-id="371"><h4 data-id="372" class="font-bold text-fore-100 text-sm">On-Chain Fee Coverage</h4><p data-id="373" class="text-fore-400 text-xs">Protocol fees on seal mints, verifications, truth-claims</p></div>
+      </div>
+      <div data-id="374" class="flex items-center gap-4 bg-base-800/60 border border-cyan-500/15 rounded-xl px-5 py-4">
+        <div data-id="375" class="w-8 h-8 rounded-lg bg-green-500/15 flex items-center justify-center flex-shrink-0 text-sm">📊</div>
+        <div data-id="376"><h4 data-id="377" class="font-bold text-fore-100 text-sm">Revenue-Budgeted Emissions</h4><p data-id="378" class="text-fore-400 text-xs">Rewards never exceed revenue justification</p></div>
+      </div>
+      <div data-id="379" class="flex items-center gap-4 bg-base-800/60 border border-cyan-500/15 rounded-xl px-5 py-4">
+        <div data-id="380" class="w-8 h-8 rounded-lg bg-blue-400/15 flex items-center justify-center flex-shrink-0 text-sm">💳</div>
+        <div data-id="381"><h4 data-id="382" class="font-bold text-fore-100 text-sm">Fiat-Native Brand Experience</h4><p data-id="383" class="text-fore-400 text-xs">SaaS pricing $149–$1,499/mo, token optional</p></div>
+      </div>
+      <div data-id="384" class="flex items-center gap-4 bg-base-800/60 border border-cyan-500/15 rounded-xl px-5 py-4">
+        <div data-id="385" class="w-8 h-8 rounded-lg bg-purple-500/15 flex items-center justify-center flex-shrink-0 text-sm">⚡</div>
+        <div data-id="386"><h4 data-id="387" class="font-bold text-fore-100 text-sm">Power-User Layer</h4><p data-id="388" class="text-fore-400 text-xs">Stake for boosts, influence, analytics access</p></div>
+      </div>
+      <div data-id="389" class="flex items-center gap-4 bg-base-800/60 border border-cyan-500/15 rounded-xl px-5 py-4">
+        <div data-id="390" class="w-8 h-8 rounded-lg bg-yellow-500/15 flex items-center justify-center flex-shrink-0 text-sm">🧱</div>
+        <div data-id="391"><h4 data-id="392" class="font-bold text-fore-100 text-sm">Clean Protocol/Token Separation</h4><p data-id="393" class="text-fore-400 text-xs">Protocol functions with zero token exposure</p></div>
+      </div>
+    </div>
+
+    <!-- Token Stats -->
+    <div data-id="394" class="reveal grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <div data-id="395" class="bg-base-800/60 border border-cyan-500/15 rounded-2xl p-6">
+        <h4 data-id="396" class="font-bold text-fore-100 mb-4 text-sm">Token Specifications</h4>
+        <div data-id="397" class="space-y-3 text-sm">
+          <div data-id="398" class="flex justify-between"><span data-id="399" class="text-fore-400">Network</span><span data-id="400" class="text-fore-100 font-semibold">Polygon</span></div>
+          <div data-id="401" class="flex justify-between"><span data-id="402" class="text-fore-400">Standard</span><span data-id="403" class="text-fore-100 font-semibold">ERC-20</span></div>
+          <div data-id="404" class="flex justify-between"><span data-id="405" class="text-fore-400">Max Supply</span><span data-id="406" class="text-fore-100 font-semibold tabular-nums">1,000,000,000</span></div>
+        </div>
+        <div data-id="407" class="mt-5 pt-4 border-t border-base-600/30">
+          <p data-id="408" class="text-xs text-fore-400 mb-3 font-semibold">Fee Sink Allocation</p>
+          <div data-id="409" class="grid grid-cols-2 gap-2 text-xs">
+            <div data-id="410" class="flex items-center gap-2"><div data-id="411" class="w-3 h-3 rounded-full bg-red-500"></div><span data-id="412" class="text-fore-300">Burn — 20%</span></div>
+            <div data-id="413" class="flex items-center gap-2"><div data-id="414" class="w-3 h-3 rounded-full bg-cyan-500"></div><span data-id="415" class="text-fore-300">Security — 30%</span></div>
+            <div data-id="416" class="flex items-center gap-2"><div data-id="417" class="w-3 h-3 rounded-full bg-purple-500"></div><span data-id="418" class="text-fore-300">AI — 30%</span></div>
+            <div data-id="419" class="flex items-center gap-2"><div data-id="420" class="w-3 h-3 rounded-full bg-blue-400"></div><span data-id="421" class="text-fore-300">Treasury — 20%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Staking Tiers -->
+      <div data-id="422" class="bg-base-800/60 border border-cyan-500/15 rounded-2xl p-6">
+        <h4 data-id="423" class="font-bold text-fore-100 mb-4 text-sm">Staking Tiers</h4>
+        <div data-id="424" class="overflow-x-auto">
+          <table data-id="425" class="w-full stake-table text-sm">
+            <thead data-id="426">
+              <tr data-id="427">
+                <th data-id="428" class="text-left py-2 px-2">Tier</th>
+                <th data-id="429" class="text-right py-2 px-2">Min Stake</th>
+                <th data-id="430" class="text-right py-2 px-2">Boost</th>
+                <th data-id="431" class="text-right py-2 px-2">Influence</th>
+              </tr>
+            </thead>
+            <tbody data-id="432" class="text-fore-200">
+              <tr data-id="433">
+                <td data-id="434" class="py-2.5 px-2 font-semibold"><span data-id="435" class="text-yellow-700">🥉</span> Bronze</td>
+                <td data-id="436" class="text-right py-2.5 px-2 tabular-nums">100</td>
+                <td data-id="437" class="text-right py-2.5 px-2 text-green-500">5%</td>
+                <td data-id="438" class="text-right py-2.5 px-2">1x</td>
+              </tr>
+              <tr data-id="439">
+                <td data-id="440" class="py-2.5 px-2 font-semibold"><span data-id="441" class="text-gray-400">🥈</span> Silver</td>
+                <td data-id="442" class="text-right py-2.5 px-2 tabular-nums">1,000</td>
+                <td data-id="443" class="text-right py-2.5 px-2 text-green-500">15%</td>
+                <td data-id="444" class="text-right py-2.5 px-2">2x</td>
+              </tr>
+              <tr data-id="445">
+                <td data-id="446" class="py-2.5 px-2 font-semibold"><span data-id="447" class="text-yellow-400">🥇</span> Gold</td>
+                <td data-id="448" class="text-right py-2.5 px-2 tabular-nums">10,000</td>
+                <td data-id="449" class="text-right py-2.5 px-2 text-green-500">25%</td>
+                <td data-id="450" class="text-right py-2.5 px-2">3x</td>
+              </tr>
+              <tr data-id="451">
+                <td data-id="452" class="py-2.5 px-2 font-semibold"><span data-id="453" class="text-cyan-400">💎</span> Platinum</td>
+                <td data-id="454" class="text-right py-2.5 px-2 tabular-nums">50,000</td>
+                <td data-id="455" class="text-right py-2.5 px-2 text-green-500">50%</td>
+                <td data-id="456" class="text-right py-2.5 px-2">5x</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-id="457" class="section-divider"></div>
+
+<!-- SECTION 9: PRICING -->
+<section data-id="458" id="pricing" class="py-20 md:py-28 bg-base-800">
+  <div data-id="459" class="max-w-6xl mx-auto px-4 md:px-6">
+    <div data-id="460" class="text-center mb-14 reveal">
+      <p data-id="461" class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Pricing</p>
+      <h2 data-id="462" id="price-title-h2" class="text-3xl md:text-5xl font-black text-fore-100">Start Protecting <span data-id="463" class="gradient-text">Your Brand</span></h2>
+    </div>
+
+    <div data-id="464" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <!-- Starter -->
+      <div data-id="465" class="reveal card-lift bg-base-900/60 backdrop-blur border border-base-600/30 rounded-2xl p-6 md:p-8">
+        <h3 data-id="466" class="text-lg font-bold text-fore-100 mb-1">Starter</h3>
+        <p data-id="467" class="text-fore-400 text-xs mb-4">For emerging brands</p>
+        <div data-id="468" class="mb-5">
+          <span data-id="469" class="text-4xl font-black text-fore-100 tabular-nums">$149</span>
+          <span data-id="470" class="text-fore-400 text-sm">/mo</span>
+        </div>
+        <ul data-id="471" class="space-y-2 text-sm text-fore-300 mb-6">
+          <li data-id="472" class="flex items-center gap-2"><span data-id="473" class="text-green-500">✓</span> 1,000 seals/month</li>
+          <li data-id="474" class="flex items-center gap-2"><span data-id="475" class="text-green-500">✓</span> $0.15/additional seal</li>
+          <li data-id="476" class="flex items-center gap-2"><span data-id="477" class="text-green-500">✓</span> REST API access</li>
+          <li data-id="478" class="flex items-center gap-2"><span data-id="479" class="text-green-500">✓</span> Email support</li>
+        </ul>
+        <button data-id="480" class="w-full bg-base-700 hover:bg-base-600 text-fore-100 font-semibold py-3 rounded-lg transition-colors text-sm" id="plan-starter-b1">Get Started</button>
+      </div>
+      <!-- Growth -->
+      <div data-id="481" class="reveal card-lift bg-base-900/60 backdrop-blur border-2 border-cyan-500/50 rounded-2xl p-6 md:p-8 relative" style="transition-delay:0.1s;">
+        <div data-id="482" class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cyan-500 text-base-900 text-xs font-bold px-4 py-1 rounded-full">Most Popular</div>
+        <h3 data-id="483" class="text-lg font-bold text-fore-100 mb-1">Growth</h3>
+        <p data-id="484" class="text-fore-400 text-xs mb-4">For scaling brands</p>
+        <div data-id="485" class="mb-5">
+          <span data-id="486" class="text-4xl font-black gradient-text tabular-nums">$499</span>
+          <span data-id="487" class="text-fore-400 text-sm">/mo</span>
+        </div>
+        <ul data-id="488" class="space-y-2 text-sm text-fore-300 mb-6">
+          <li data-id="489" class="flex items-center gap-2"><span data-id="490" class="text-green-500">✓</span> 10,000 seals/month</li>
+          <li data-id="491" class="flex items-center gap-2"><span data-id="492" class="text-green-500">✓</span> $0.05/additional seal</li>
+          <li data-id="493" class="flex items-center gap-2"><span data-id="494" class="text-green-500">✓</span> Webhooks + SDKs</li>
+          <li data-id="495" class="flex items-center gap-2"><span data-id="496" class="text-green-500">✓</span> Priority support</li>
+          <li data-id="497" class="flex items-center gap-2"><span data-id="498" class="text-green-500">✓</span> Analytics dashboard</li>
+        </ul>
+        <button data-id="499" class="w-full bg-cyan-500 hover:bg-cyan-600 text-base-900 font-bold py-3 rounded-lg glow-btn transition-colors text-sm" id="plan-growth-b1">Get Started</button>
+      </div>
+      <!-- Enterprise -->
+      <div data-id="500" class="reveal card-lift bg-base-900/60 backdrop-blur border border-base-600/30 rounded-2xl p-6 md:p-8" style="transition-delay:0.2s;">
+        <h3 data-id="501" class="text-lg font-bold text-fore-100 mb-1">Enterprise</h3>
+        <p data-id="502" class="text-fore-400 text-xs mb-4">For global brands</p>
+        <div data-id="503" class="mb-5">
+          <span data-id="504" class="text-4xl font-black text-fore-100 tabular-nums">$1,499</span>
+          <span data-id="505" class="text-fore-400 text-sm">/mo</span>
+        </div>
+        <ul data-id="506" class="space-y-2 text-sm text-fore-300 mb-6">
+          <li data-id="507" class="flex items-center gap-2"><span data-id="508" class="text-green-500">✓</span> Unlimited seals</li>
+          <li data-id="509" class="flex items-center gap-2"><span data-id="510" class="text-green-500">✓</span> Custom integrations</li>
+          <li data-id="511" class="flex items-center gap-2"><span data-id="512" class="text-green-500">✓</span> ERP connectors</li>
+          <li data-id="513" class="flex items-center gap-2"><span data-id="514" class="text-green-500">✓</span> Dedicated account manager</li>
+          <li data-id="515" class="flex items-center gap-2"><span data-id="516" class="text-green-500">✓</span> SLA guarantee</li>
+        </ul>
+        <button data-id="517" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition-colors text-sm" id="plan-ent-b1">Contact Sales</button>
+      </div>
+    </div>
+
+    <p data-id="518" class="reveal text-center text-fore-400 text-xs mb-12">Staking discounts: 2–15% based on $QRON stake amount</p>
+
+    <!-- Demo Form -->
+    <div data-id="519" class="reveal max-w-lg mx-auto">
+      <div data-id="520" class="bg-base-900/60 backdrop-blur border border-cyan-500/15 rounded-2xl p-6 md:p-8">
+        <h3 data-id="521" class="text-xl font-bold text-fore-100 mb-2 text-center">Schedule Enterprise Demo</h3>
+        <p data-id="522" class="text-fore-400 text-xs text-center mb-6">Get a personalized walkthrough of AuthiChain's enterprise capabilities.</p>
+        <form data-id="523" id="demo-form-f1" class="space-y-4">
+          <div data-id="524">
+            <label data-id="525" class="block text-xs font-medium text-fore-300 mb-1.5">Company Name</label>
+            <input data-id="526" type="text" id="company-inp-i1" class="w-full bg-base-800 border border-base-600/50 rounded-lg px-4 py-3 text-sm text-fore-100 placeholder-fore-400 focus:outline-none focus:border-cyan-500 transition-colors" placeholder="Your Company" required />
+          </div>
+          <div data-id="527">
+            <label data-id="528" class="block text-xs font-medium text-fore-300 mb-1.5">Industry</label>
+            <input data-id="529" type="text" id="industry-inp-i1" class="w-full bg-base-800 border border-base-600/50 rounded-lg px-4 py-3 text-sm text-fore-100 placeholder-fore-400 focus:outline-none focus:border-cyan-500 transition-colors" placeholder="e.g. Cannabis, Luxury, Pharma" required />
+          </div>
+          <div data-id="530">
+            <label data-id="531" class="block text-xs font-medium text-fore-300 mb-1.5">Contact Email</label>
+            <input data-id="532" type="email" id="email-inp-i1" class="w-full bg-base-800 border border-base-600/50 rounded-lg px-4 py-3 text-sm text-fore-100 placeholder-fore-400 focus:outline-none focus:border-cyan-500 transition-colors" placeholder="you@company.com" required />
+          </div>
+          <button data-id="533" type="submit" id="submit-demo-b1" class="w-full bg-cyan-500 hover:bg-cyan-600 text-base-900 font-bold py-3.5 rounded-lg glow-btn transition-colors text-sm">Request Demo</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-id="534" class="section-divider"></div>
+
+<!-- SECTION 10: ROADMAP -->
+<section data-id="535" id="roadmap" class="py-20 md:py-28 bg-base-900">
+  <div data-id="536" class="max-w-4xl mx-auto px-4 md:px-6">
+    <div data-id="537" class="text-center mb-14 reveal">
+      <p data-id="538" class="text-cyan-400 text-sm font-semibold uppercase tracking-widest mb-3">Roadmap</p>
+      <h2 data-id="539" id="road-title-h2" class="text-3xl md:text-5xl font-black text-fore-100">Built for <span data-id="540" class="gradient-text">What's Next</span></h2>
+    </div>
+
+    <div data-id="541" class="relative">
+      <!-- Vertical timeline line -->
+      <div data-id="542" class="absolute left-5 md:left-8 top-0 bottom-0 timeline-line"></div>
+
+      <div data-id="543" class="space-y-10 ml-12 md:ml-20">
+        <div data-id="544" class="reveal relative">
+          <div data-id="545" class="absolute -left-[calc(1.75rem+9px)] md:-left-[calc(3rem+9px)] top-1 timeline-dot"></div>
+          <div data-id="546" class="bg-base-800/60 border border-cyan-500/20 rounded-2xl p-5 md:p-6">
+            <span data-id="547" class="inline-block bg-cyan-500/15 text-cyan-400 text-xs font-bold px-3 py-1 rounded-full mb-3">NOW</span>
+            <h4 data-id="548" class="font-bold text-fore-100 mb-2">Foundation & Launch</h4>
+            <p data-id="549" class="text-fore-400 text-sm leading-relaxed">Edge verification live • StrainChain Michigan pilot • QRON Studio launched • Core API v1</p>
+          </div>
+        </div>
+        <div data-id="550" class="reveal relative" style="transition-delay:0.1s;">
+          <div data-id="551" class="absolute -left-[calc(1.75rem+9px)] md:-left-[calc(3rem+9px)] top-1 timeline-dot"></div>
+          <div data-id="552" class="bg-base-800/40 border border-base-600/20 rounded-2xl p-5 md:p-6">
+            <span data-id="553" class="inline-block bg-base-700 text-fore-300 text-xs font-bold px-3 py-1 rounded-full mb-3">Q3 2026</span>
+            <h4 data-id="554" class="font-bold text-fore-100 mb-2">Intelligence Layer</h4>
+            <p data-id="555" class="text-fore-400 text-sm leading-relaxed">On-device AI verification • Multi-modal authentication • Advanced analytics dashboard</p>
+          </div>
+        </div>
+        <div data-id="556" class="reveal relative" style="transition-delay:0.2s;">
+          <div data-id="557" class="absolute -left-[calc(1.75rem+9px)] md:-left-[calc(3rem+9px)] top-1 timeline-dot"></div>
+          <div data-id="558" class="bg-base-800/40 border border-base-600/20 rounded-2xl p-5 md:p-6">
+            <span data-id="559" class="inline-block bg-base-700 text-fore-300 text-xs font-bold px-3 py-1 rounded-full mb-3">Q4 2026</span>
+            <h4 data-id="560" class="font-bold text-fore-100 mb-2">Government & Enterprise</h4>
+            <p data-id="561" class="text-fore-400 text-sm leading-relaxed">GovChain federal pilot • Partner-specific AI tuning • ERP connector marketplace</p>
+          </div>
+        </div>
+        <div data-id="562" class="reveal relative" style="transition-delay:0.3s;">
+          <div data-id="563" class="absolute -left-[calc(1.75rem+9px)] md:-left-[calc(3rem+9px)] top-1 timeline-dot"></div>
+          <div data-id="564" class="bg-base-800/40 border border-base-600/20 rounded-2xl p-5 md:p-6">
+            <span data-id="565" class="inline-block bg-base-700 text-fore-300 text-xs font-bold px-3 py-1 rounded-full mb-3">2027</span>
+            <h4 data-id="566" class="font-bold text-fore-100 mb-2">Global Scale</h4>
+            <p data-id="567" class="text-fore-400 text-sm leading-relaxed">Distributed provenance graph • Offline QRON experiences • Global expansion across verticals</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer data-id="568" id="footer-ft1" class="border-t border-base-600/20 bg-base-900 pt-14 pb-8">
+  <div data-id="569" class="max-w-6xl mx-auto px-4 md:px-6">
+    <div data-id="570" class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+      <div data-id="571">
+        <h4 data-id="572" class="text-sm font-bold text-fore-100 mb-4">Ecosystem</h4>
+        <ul data-id="573" class="space-y-2 text-sm text-fore-400">
+          <li data-id="574"><span data-id="575" class="hover:text-cyan-400 cursor-pointer transition-colors">StrainChain.io</span></li>
+          <li data-id="576"><span data-id="577" class="hover:text-cyan-400 cursor-pointer transition-colors">GovChain.us</span></li>
+          <li data-id="578"><span data-id="579" class="hover:text-cyan-400 cursor-pointer transition-colors">QRON.space</span></li>
+          <li data-id="580"><span data-id="581" class="hover:text-cyan-400 cursor-pointer transition-colors">$QRON Token</span></li>
+        </ul>
+      </div>
+      <div data-id="582">
+        <h4 data-id="583" class="text-sm font-bold text-fore-100 mb-4">Developers</h4>
+        <ul data-id="584" class="space-y-2 text-sm text-fore-400">
+          <li data-id="585"><span data-id="586" class="hover:text-cyan-400 cursor-pointer transition-colors">API Docs</span></li>
+          <li data-id="587"><span data-id="588" class="hover:text-cyan-400 cursor-pointer transition-colors">SDKs</span></li>
+          <li data-id="589"><span data-id="590" class="hover:text-cyan-400 cursor-pointer transition-colors">GitHub</span></li>
+          <li data-id="591"><span data-id="592" class="hover:text-cyan-400 cursor-pointer transition-colors">Webhooks</span></li>
+          <li data-id="593"><span data-id="594" class="hover:text-cyan-400 cursor-pointer transition-colors">Status Page</span></li>
+        </ul>
+      </div>
+      <div data-id="595">
+        <h4 data-id="596" class="text-sm font-bold text-fore-100 mb-4">Company</h4>
+        <ul data-id="597" class="space-y-2 text-sm text-fore-400">
+          <li data-id="598"><span data-id="599" class="hover:text-cyan-400 cursor-pointer transition-colors">About</span></li>
+          <li data-id="600"><span data-id="601" class="hover:text-cyan-400 cursor-pointer transition-colors">Blog</span></li>
+          <li data-id="602"><span data-id="603" class="hover:text-cyan-400 cursor-pointer transition-colors">Careers</span></li>
+          <li data-id="604"><span data-id="605" class="hover:text-cyan-400 cursor-pointer transition-colors">Press</span></li>
+          <li data-id="606"><span data-id="607" class="hover:text-cyan-400 cursor-pointer transition-colors">Contact</span></li>
+        </ul>
+      </div>
+      <div data-id="608">
+        <h4 data-id="609" class="text-sm font-bold text-fore-100 mb-4">Community</h4>
+        <div data-id="610" class="flex flex-wrap gap-3">
+          <span data-id="611" class="w-10 h-10 rounded-lg bg-base-800 border border-base-600/30 flex items-center justify-center text-fore-300 hover:text-cyan-400 hover:border-cyan-500/30 cursor-pointer transition-colors">
+            <svg data-id="612" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path data-id="613" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </span>
+          <span data-id="614" class="w-10 h-10 rounded-lg bg-base-800 border border-base-600/30 flex items-center justify-center text-fore-300 hover:text-cyan-400 hover:border-cyan-500/30 cursor-pointer transition-colors">
+            <svg data-id="615" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path data-id="616" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+          </span>
+          <span data-id="617" class="w-10 h-10 rounded-lg bg-base-800 border border-base-600/30 flex items-center justify-center text-fore-300 hover:text-cyan-400 hover:border-cyan-500/30 cursor-pointer transition-colors">
+            <svg data-id="618" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path data-id="619" d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          </span>
+          <span data-id="620" class="w-10 h-10 rounded-lg bg-base-800 border border-base-600/30 flex items-center justify-center text-fore-300 hover:text-cyan-400 hover:border-cyan-500/30 cursor-pointer transition-colors">
+            <svg data-id="621" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path data-id="622" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div data-id="623" class="border-t border-base-600/20 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p data-id="624" class="text-xs text-fore-400">© 2026 AuthiChain, Inc. All rights reserved. | Privacy Policy | Terms of Service</p>
+      <p data-id="625" class="text-xs text-fore-400">Made by Copilot</p>
+    </div>
+    <p data-id="626" class="text-center text-[10px] text-fore-400/50 mt-4">AuthiChain — The Truth Layer for the Global Economy</p>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div data-id="627" id="toast-container-t1" class="fixed top-20 right-4 z-50"></div>
+
+<script>
+(function() {
+  // --- Mobile Menu ---
+  const mobileBtn = document.getElementById('mobile-menu-btn-m1');
+  const mobileMenu = document.getElementById('mobile-menu-m1');
+  const mobileClose = document.getElementById('mobile-close-btn-m1');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+  mobileBtn.addEventListener('click', () => {
+    mobileMenu.classList.remove('hidden');
+    mobileMenu.classList.add('flex');
+  });
+  mobileClose.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('flex');
+  });
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+    });
+  });
+
+  // --- Scroll Reveal ---
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // --- Counter Animation ---
+  function animateCounter(el) {
+    const target = parseFloat(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const isDecimal = target % 1 !== 0;
+    const duration = 2000;
+    const startTime = performance.now();
+
+    function formatNumber(n) {
+      if (isDecimal) return n.toFixed(2);
+      if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+      if (n >= 1000) return Math.floor(n).toLocaleString();
+      return Math.floor(n).toString();
+    }
+
+    function step(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = eased * target;
+      el.textContent = prefix + formatNumber(current) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const counters = document.querySelectorAll('.counter-num');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterObserver.observe(el));
+
+  // --- Navbar Active State ---
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('#desktop-nav-n1 a');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY + 100;
+    sections.forEach(section => {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      const id = section.getAttribute('id');
+      if (scrollY >= top && scrollY < top + height) {
+        navLinks.forEach(link => {
+          link.classList.remove('text-cyan-400');
+          link.classList.add('text-fore-300');
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('text-cyan-400');
+            link.classList.remove('text-fore-300');
+          }
+        });
+      }
+    });
+  });
+
+  // --- Animated Border Rotation ---
+  let borderAngle = 0;
+  const animatedBorders = document.querySelectorAll('.animated-border::before');
+  function rotateBorders() {
+    borderAngle = (borderAngle + 0.5) % 360;
+    document.querySelectorAll('.animated-border').forEach(el => {
+      const before = el.querySelector('::before');
+      el.style.setProperty('--border-angle', borderAngle + 'deg');
+    });
+    requestAnimationFrame(rotateBorders);
+  }
+  rotateBorders();
+
+  // --- Form Handling ---
+  const form = document.getElementById('demo-form-f1');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const company = document.getElementById('company-inp-i1').value.trim();
+    const industry = document.getElementById('industry-inp-i1').value.trim();
+    const email = document.getElementById('email-inp-i1').value.trim();
+
+    if (!company || !industry || !email) return;
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      showToast('Please enter a valid email address.', 'error');
+      return;
+    }
+
+    showToast('Demo request submitted! We\'ll reach out to ' + email + ' within 24 hours.', 'success');
+    form.reset();
+  });
+
+  function showToast(message, type) {
+    const container = document.getElementById('toast-container-t1');
+    const toast = document.createElement('div');
+    const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+    toast.className = `${bgColor} text-white text-sm font-medium px-5 py-3 rounded-xl shadow-2xl mb-3 toast-in max-w-sm`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.remove('toast-in');
+      toast.classList.add('toast-out');
+      setTimeout(() => toast.remove(), 400);
+    }, 4000);
+  }
+
+  // --- Pricing button handlers ---
+  document.getElementById('plan-starter-b1').addEventListener('click', () => {
+    document.getElementById('demo-form-f1').scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('plan-growth-b1').addEventListener('click', () => {
+    document.getElementById('demo-form-f1').scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('plan-ent-b1').addEventListener('click', () => {
+    document.getElementById('demo-form-f1').scrollIntoView({ behavior: 'smooth' });
+  });
+})();
+</script>
+</body>
+</html>
