@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing - AuthiChain | Blockchain Product Authentication</title>
+  <meta name="description" content="AuthiChain pricing plans for brands, manufacturers, and enterprises. Start free, scale with confidence." />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0f; color: #e2e8f0; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; border-bottom: 1px solid #1e2a3a; background: rgba(10,10,15,0.95); position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #00d4ff; text-decoration: none; }
+    .nav-links a { color: #94a3b8; text-decoration: none; margin-left: 2rem; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .cta-btn { background: #00d4ff; color: #000; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+    .hero { text-align: center; padding: 5rem 2rem 3rem; }
+    .hero h1 { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+    .hero p { color: #94a3b8; font-size: 1.15rem; max-width: 600px; margin: 0 auto; }
+    .toggle { display: flex; justify-content: center; gap: 0.5rem; margin: 2.5rem 0; }
+    .toggle button { padding: 0.5rem 1.5rem; border-radius: 50px; border: 1px solid #1e2a3a; background: transparent; color: #94a3b8; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+    .toggle button.active { background: #00d4ff; color: #000; border-color: #00d4ff; font-weight: 700; }
+    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; padding: 0 2rem 5rem; }
+    .plan { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 16px; padding: 2.5rem; position: relative; transition: border-color 0.3s; }
+    .plan:hover { border-color: #00d4ff; }
+    .plan.popular { border-color: #00d4ff; }
+    .badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: #00d4ff; color: #000; font-size: 0.75rem; font-weight: 800; padding: 0.2rem 1rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .plan-name { font-size: 1.1rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .plan-price { font-size: 3rem; font-weight: 900; color: #fff; margin-bottom: 0.25rem; }
+    .plan-price span { font-size: 1rem; font-weight: 400; color: #64748b; }
+    .plan-desc { color: #64748b; font-size: 0.9rem; margin-bottom: 2rem; }
+    .plan-btn { display: block; text-align: center; padding: 0.85rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.95rem; margin-bottom: 2rem; transition: all 0.2s; }
+    .plan-btn.primary { background: #00d4ff; color: #000; }
+    .plan-btn.primary:hover { background: #00b8e0; }
+    .plan-btn.outline { border: 1px solid #1e2a3a; color: #94a3b8; }
+    .plan-btn.outline:hover { border-color: #00d4ff; color: #00d4ff; }
+    .features { list-style: none; }
+    .features li { padding: 0.5rem 0; color: #94a3b8; font-size: 0.9rem; display: flex; align-items: center; gap: 0.6rem; border-bottom: 1px solid #1a2234; }
+    .features li:last-child { border-bottom: none; }
+    .check { color: #00d4ff; font-weight: 700; }
+    .faq { max-width: 800px; margin: 0 auto; padding: 0 2rem 5rem; }
+    .faq h2 { text-align: center; font-size: 2rem; font-weight: 800; margin-bottom: 2rem; }
+    .faq-item { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+    .faq-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .faq-item p { color: #64748b; font-size: 0.9rem; line-height: 1.6; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid #1e2a3a; color: #64748b; font-size: 0.85rem; }
+    footer a { color: #00d4ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">AuthiChain</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/verify">Verify</a>
+      <a href="/marketplace">Marketplace</a>
+      <a href="/docs">Docs</a>
+      <a href="/contact">Contact</a>
+      <a href="/demo" class="cta-btn" style="margin-left:2rem">Get Demo</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Simple, Transparent Pricing</h1>
+    <p>Protect your brand and delight customers. No hidden fees. Cancel anytime.</p>
+  </div>
+
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">$99<span>/mo</span></div>
+      <div class="plan-desc">Perfect for small brands and pilots</div>
+      <a href="/demo" class="plan-btn outline">Start Free Trial</a>
+      <ul class="features">
+        <li><span class="check">✓</span> Up to 1,000 authenticated products/mo</li>
+        <li><span class="check">✓</span> QR code generation &amp; styling</li>
+        <li><span class="check">✓</span> Blockchain certificate issuance</li>
+        <li><span class="check">✓</span> Consumer verify page</li>
+        <li><span class="check">✓</span> Basic analytics dashboard</li>
+        <li><span class="check">✓</span> Email support</li>
+      </ul>
+    </div>
+
+    <div class="plan popular">
+      <div class="badge">Most Popular</div>
+      <div class="plan-name">Growth</div>
+      <div class="plan-price">$499<span>/mo</span></div>
+      <div class="plan-desc">For scaling brands &amp; manufacturers</div>
+      <a href="/demo" class="plan-btn primary">Start Free Trial</a>
+      <ul class="features">
+        <li><span class="check">✓</span> Up to 25,000 authenticated products/mo</li>
+        <li><span class="check">✓</span> All Starter features</li>
+        <li><span class="check">✓</span> White-label verify pages</li>
+        <li><span class="check">✓</span> NFT certificate minting (Polygon)</li>
+        <li><span class="check">✓</span> Batch verification API</li>
+        <li><span class="check">✓</span> Leaderboard &amp; loyalty rewards</li>
+        <li><span class="check">✓</span> Webhook integrations</li>
+        <li><span class="check">✓</span> Priority support</li>
+      </ul>
+    </div>
+
+    <div class="plan">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price">$2,500<span>/mo</span></div>
+      <div class="plan-desc">Custom solutions for large organizations</div>
+      <a href="/contact" class="plan-btn outline">Contact Sales</a>
+      <ul class="features">
+        <li><span class="check">✓</span> Unlimited product authentication</li>
+        <li><span class="check">✓</span> All Growth features</li>
+        <li><span class="check">✓</span> Custom blockchain network</li>
+        <li><span class="check">✓</span> Dedicated API gateway</li>
+        <li><span class="check">✓</span> Multi-tenant management</li>
+        <li><span class="check">✓</span> SLA &amp; uptime guarantee</li>
+        <li><span class="check">✓</span> Dedicated success manager</li>
+        <li><span class="check">✓</span> SSO &amp; SAML support</li>
+        <li><span class="check">✓</span> Government/compliance reporting</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>Is there a free trial?</h3>
+      <p>Yes! All plans include a 14-day free trial. No credit card required to start. Upgrade or cancel anytime.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What blockchain does AuthiChain use?</h3>
+      <p>AuthiChain uses Polygon (MATIC) for cost-effective, eco-friendly certificate issuance. Enterprise plans can use custom EVM-compatible chains.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I integrate with my existing ERP or PIM?</h3>
+      <p>Yes. Our API and webhook system integrates with any ERP, PIM, or e-commerce platform. Full API docs available at /docs.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What happens to certificates if I cancel?</h3>
+      <p>All issued certificates remain permanently on the blockchain. Your customers can always verify authenticity even if you change plans.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AuthiChain. All rights reserved. | <a href="/">Home</a> | <a href="/contact">Contact</a> | <a href="/docs">Docs</a></p>
+  </footer>
+</body>
+</html>
