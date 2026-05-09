@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - AuthiChain | The Truth Layer for the Global Economy</title>
+  <meta name="description" content="AuthiChain is building the truth layer for the global economy. Our blockchain-powered platform authenticates products, protects brands, and empowers consumers." />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0f; color: #e2e8f0; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; border-bottom: 1px solid #1e2a3a; background: rgba(10,10,15,0.95); position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #00d4ff; text-decoration: none; }
+    .nav-links a { color: #94a3b8; text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+    .cta-btn { background: #00d4ff; color: #000; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 700; text-decoration: none; }
+    .hero { text-align: center; padding: 5rem 2rem 4rem; max-width: 800px; margin: 0 auto; }
+    .hero h1 { font-size: 3rem; font-weight: 900; background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem; line-height: 1.2; }
+    .hero p { color: #94a3b8; font-size: 1.15rem; line-height: 1.7; }
+    .mission { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+    .mission-card { background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(124,58,237,0.05)); border: 1px solid #1e2a3a; border-radius: 16px; padding: 3rem; text-align: center; }
+    .mission-card h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem; color: #00d4ff; }
+    .mission-card p { color: #94a3b8; font-size: 1.05rem; line-height: 1.7; max-width: 600px; margin: 0 auto; }
+    .values { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+    .values h2 { text-align: center; font-size: 2rem; font-weight: 800; margin-bottom: 2.5rem; }
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .value-card { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 12px; padding: 1.75rem; }
+    .value-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .value-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .value-card p { color: #64748b; font-size: 0.9rem; line-height: 1.6; }
+    .team { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+    .team h2 { text-align: center; font-size: 2rem; font-weight: 800; margin-bottom: 2.5rem; }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .team-card { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 12px; padding: 1.75rem; text-align: center; }
+    .avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #00d4ff, #7c3aed); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; color: #000; }
+    .team-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .team-card .role { color: #00d4ff; font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .team-card p { color: #64748b; font-size: 0.85rem; line-height: 1.5; }
+    .stats { background: #0f1623; border-top: 1px solid #1e2a3a; border-bottom: 1px solid #1e2a3a; padding: 3rem 2rem; margin: 2rem 0; }
+    .stats-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; text-align: center; }
+    .stat-num { font-size: 2.5rem; font-weight: 900; color: #00d4ff; }
+    .stat-label { color: #64748b; font-size: 0.9rem; margin-top: 0.25rem; }
+    .cta-section { text-align: center; padding: 4rem 2rem; }
+    .cta-section h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+    .cta-section p { color: #94a3b8; margin-bottom: 2rem; }
+    .cta-section a { background: #00d4ff; color: #000; padding: 0.9rem 2.5rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; display: inline-block; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid #1e2a3a; color: #64748b; font-size: 0.85rem; }
+    footer a { color: #00d4ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">AuthiChain</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/verify">Verify</a>
+      <a href="/contact">Contact</a>
+      <a href="/demo" class="cta-btn" style="margin-left:2rem">Get Demo</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Building the Truth Layer for the Global Economy</h1>
+    <p>AuthiChain is a blockchain-powered product authentication platform that helps brands prove authenticity, consumers verify genuineness, and supply chains maintain integrity.</p>
+  </div>
+
+  <div class="mission">
+    <div class="mission-card">
+      <h2>Our Mission</h2>
+      <p>To eliminate counterfeiting and restore trust in physical goods by anchoring product identity permanently on the blockchain — making every product verifiable by anyone, anywhere, forever.</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stats-inner">
+      <div><div class="stat-num">$4.5T</div><div class="stat-label">Global counterfeit market</div></div>
+      <div><div class="stat-num">1B+</div><div class="stat-label">Fake products circulating</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Blockchain-immutable records</div></div>
+      <div><div class="stat-num">&lt;1s</div><div class="stat-label">Verification time</div></div>
+    </div>
+  </div>
+
+  <div class="values">
+    <h2>Our Values</h2>
+    <div class="values-grid">
+      <div class="value-card"><div class="value-icon">🔒</div><h3>Trust by Default</h3><p>Every action on our platform is recorded immutably on the blockchain. No exceptions.</p></div>
+      <div class="value-card"><div class="value-icon">💪</div><h3>Empowering Brands</h3><p>We give brands the tools to fight back against counterfeiting without complexity or massive infrastructure.</p></div>
+      <div class="value-card"><div class="value-icon">👥</div><h3>Consumer First</h3><p>Verification is always free for consumers. Scan, verify, trust — that simple.</p></div>
+      <div class="value-card"><div class="value-icon">🌍</div><h3>Open Standards</h3><p>We build on open blockchain standards so your certificates are never locked to a single vendor.</p></div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Ready to protect your brand?</h2>
+    <p>Join the brands already using AuthiChain to authenticate products and build customer trust.</p>
+    <a href="/demo">Request a Demo</a>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AuthiChain | <a href="/">Home</a> | <a href="/pricing">Pricing</a> | <a href="/contact">Contact</a> | <a href="/docs">Docs</a></p>
+  </footer>
+</body>
+</html>
