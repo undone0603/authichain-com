@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketplace - AuthiChain | Authenticated Products</title>
+  <meta name="description" content="Browse the AuthiChain Marketplace. Discover and purchase blockchain-authenticated products from verified brands and manufacturers." />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0f; color: #e2e8f0; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; border-bottom: 1px solid #1e2a3a; background: rgba(10,10,15,0.95); position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #00d4ff; text-decoration: none; }
+    .nav-links a { color: #94a3b8; text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+    .hero { text-align: center; padding: 4rem 2rem 3rem; }
+    .hero h1 { font-size: 2.5rem; font-weight: 900; background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+    .hero p { color: #94a3b8; font-size: 1.05rem; }
+    .filters { max-width: 1100px; margin: 0 auto; padding: 0 2rem 2rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .search-bar { flex: 1; min-width: 200px; background: #0f1623; border: 1px solid #1e2a3a; border-radius: 8px; padding: 0.75rem 1rem; color: #e2e8f0; font-size: 0.95rem; outline: none; }
+    .search-bar:focus { border-color: #00d4ff; }
+    .filter-select { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 8px; padding: 0.75rem 1rem; color: #e2e8f0; font-size: 0.9rem; outline: none; cursor: pointer; }
+    .grid { max-width: 1100px; margin: 0 auto; padding: 0 2rem 5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .product-card { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 16px; overflow: hidden; transition: border-color 0.3s, transform 0.2s; cursor: pointer; }
+    .product-card:hover { border-color: #00d4ff; transform: translateY(-2px); }
+    .product-img { height: 180px; background: linear-gradient(135deg, #0a0f1e, #1a2a3a); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+    .product-info { padding: 1.25rem; }
+    .product-brand { font-size: 0.75rem; color: #00d4ff; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+    .product-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .product-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+    .auth-badge { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px; font-weight: 600; }
+    .product-price { font-size: 1.1rem; font-weight: 800; color: #fff; }
+    .category-tabs { max-width: 1100px; margin: 0 auto; padding: 0 2rem 2rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .cat-btn { padding: 0.4rem 1rem; border-radius: 50px; border: 1px solid #1e2a3a; background: transparent; color: #94a3b8; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+    .cat-btn.active { background: #00d4ff; color: #000; border-color: #00d4ff; font-weight: 700; }
+    .cta-bar { background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(124,58,237,0.05)); border: 1px solid #1e2a3a; border-radius: 16px; max-width: 1100px; margin: 0 auto 4rem; padding: 2rem; text-align: center; }
+    .cta-bar h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .cta-bar p { color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .cta-bar a { background: #00d4ff; color: #000; padding: 0.75rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid #1e2a3a; color: #64748b; font-size: 0.85rem; }
+    footer a { color: #00d4ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">AuthiChain</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/verify">Verify</a>
+      <a href="/demo">Demo</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>AuthiChain Marketplace</h1>
+    <p>Every product blockchain-certified. Buy with confidence.</p>
+  </div>
+
+  <div class="filters">
+    <input class="search-bar" placeholder="Search authenticated products..." id="searchInput" />
+    <select class="filter-select"><option>All Brands</option><option>Luxury</option><option>Pharma</option><option>Cannabis</option></select>
+    <select class="filter-select"><option>Sort: Featured</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Newest</option></select>
+  </div>
+
+  <div class="category-tabs">
+    <button class="cat-btn active">All</button>
+    <button class="cat-btn">Luxury Goods</button>
+    <button class="cat-btn">Pharma</button>
+    <button class="cat-btn">Cannabis</button>
+    <button class="cat-btn">Electronics</button>
+    <button class="cat-btn">Food &amp; Bev</button>
+    <button class="cat-btn">Collectibles</button>
+  </div>
+
+  <div class="grid" id="productGrid">
+    <div class="product-card">
+      <div class="product-img">👜</div>
+      <div class="product-info">
+        <div class="product-brand">LuxBrand Co.</div>
+        <div class="product-name">Artisan Leather Tote — Midnight Black</div>
+        <div class="product-meta"><span class="auth-badge">⛓ Authenticated</span><span class="product-price">$1,200</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">💊</div>
+      <div class="product-info">
+        <div class="product-brand">PharmaTrust</div>
+        <div class="product-name">Certified Supplement — Omega-3 Premium</div>
+        <div class="product-meta"><span class="auth-badge">⛓ Authenticated</span><span class="product-price">$89</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🌿</div>
+      <div class="product-info">
+        <div class="product-brand">StrainChain Farms</div>
+        <div class="product-name">Premium Indoor Flower — Certificate of Origin</div>
+        <div class="product-meta"><span class="auth-badge">⛓ Authenticated</span><span class="product-price">$45</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">⌚</div>
+      <div class="product-info">
+        <div class="product-brand">TimePiece Verified</div>
+        <div class="product-name">Swiss Movement Watch — Ref. 5711</div>
+        <div class="product-meta"><span class="auth-badge">⛓ Authenticated</span><span class="product-price">$8,500</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">👠</div>
+      <div class="product-info">
+        <div class="product-brand">LuxBrand Co.</div>
+        <div class="product-name">Calfskin Derby Shoes — Cognac</div>
+        <div class="product-meta"><span class="auth-badge">⛓ Authenticated</span><span class="product-price">$640</span></div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🎺</div>
+      <div class="product-info">
+        <div class="product-brand">VintageAudio</div>
+        <div class="product-name">Refurbished Turntable — Limited Edition</div>
+        <div class="product-meta"><span class="auth-badge">⛓ Authenticated</span><span class="product-price">$299</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-bar" style="padding: 0 2rem;">
+    <div style="max-width:1100px; margin:0 auto; background:linear-gradient(135deg,rgba(0,212,255,0.05),rgba(124,58,237,0.05)); border:1px solid #1e2a3a; border-radius:16px; padding:2rem; text-align:center;">
+      <h3>List Your Products on the Marketplace</h3>
+      <p>Brands on Growth and Enterprise plans can list authenticated products and reach verified buyers worldwide.</p>
+      <a href="/demo">Apply to List &rarr;</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AuthiChain | <a href="/">Home</a> | <a href="/pricing">Pricing</a> | <a href="/contact">Contact</a></p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
