@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request a Demo - AuthiChain</title>
+  <meta name="description" content="See AuthiChain in action. Book a personalized demo and discover how blockchain authentication can protect your brand." />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0f; color: #e2e8f0; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; border-bottom: 1px solid #1e2a3a; background: rgba(10,10,15,0.95); position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #00d4ff; text-decoration: none; }
+    .nav-links a { color: #94a3b8; text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+    .page { display: grid; grid-template-columns: 1fr 1fr; min-height: 90vh; max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; gap: 4rem; align-items: start; }
+    @media(max-width:768px) { .page { grid-template-columns: 1fr; } }
+    .left h1 { font-size: 2.5rem; font-weight: 900; background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; line-height: 1.2; }
+    .left p { color: #94a3b8; font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; }
+    .bullets { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .bullets li { display: flex; align-items: center; gap: 0.75rem; color: #cbd5e1; font-size: 0.95rem; }
+    .bullets .icon { color: #00d4ff; font-size: 1.2rem; }
+    .form-card { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 16px; padding: 2.5rem; }
+    .form-card h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .form-card p { color: #64748b; font-size: 0.9rem; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.4rem; font-weight: 600; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; background: #0a0a0f; border: 1px solid #1e2a3a; border-radius: 8px; padding: 0.75rem 1rem; color: #e2e8f0; font-size: 0.95rem; outline: none; transition: border-color 0.2s; font-family: inherit; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #00d4ff; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .submit-btn { width: 100%; background: linear-gradient(135deg, #00d4ff, #7c3aed); color: #fff; border: none; padding: 1rem; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s; margin-top: 0.5rem; }
+    .submit-btn:hover { opacity: 0.9; }
+    .success { display: none; text-align: center; padding: 2rem; }
+    .success h3 { font-size: 1.5rem; color: #00d4ff; margin-bottom: 0.5rem; }
+    .success p { color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">AuthiChain</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/verify">Verify</a>
+      <a href="/docs">Docs</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div class="left">
+      <h1>See AuthiChain in Action</h1>
+      <p>Book a 30-minute personalized demo with our team. We'll show you how AuthiChain can protect your brand, delight customers, and unlock new revenue streams.</p>
+      <ul class="bullets">
+        <li><span class="icon">⛓️</span> Blockchain certificate issuance in real-time</li>
+        <li><span class="icon">🔍</span> Consumer-facing product verify experience</li>
+        <li><span class="icon">📈</span> Analytics dashboard &amp; loyalty rewards</li>
+        <li><span class="icon">🔗</span> API integration walkthrough</li>
+        <li><span class="icon">💼</span> Custom branding &amp; white-label options</li>
+        <li><span class="icon">✅</span> Live Q&amp;A with our solutions team</li>
+      </ul>
+    </div>
+
+    <div class="form-card">
+      <h2>Book Your Demo</h2>
+      <p>Fill in your details and we'll reach out within 1 business day.</p>
+      <form id="demoForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" name="firstName" required placeholder="Jane" />
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" name="lastName" required placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Work Email *</label>
+          <input type="email" name="email" required placeholder="jane@yourbrand.com" />
+        </div>
+        <div class="form-group">
+          <label>Company *</label>
+          <input type="text" name="company" required placeholder="Your Brand Inc." />
+        </div>
+        <div class="form-group">
+          <label>Industry</label>
+          <select name="industry">
+            <option value="">Select industry...</option>
+            <option>Luxury Goods</option>
+            <option>Pharmaceuticals</option>
+            <option>Cannabis / Hemp</option>
+            <option>Food &amp; Beverage</option>
+            <option>Electronics</option>
+            <option>Apparel &amp; Fashion</option>
+            <option>Government / Defense</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Products to authenticate per month (estimate)</label>
+          <select name="volume">
+            <option value="">Select volume...</option>
+            <option>Under 1,000</option>
+            <option>1,000 - 10,000</option>
+            <option>10,000 - 100,000</option>
+            <option>100,000+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tell us about your use case</label>
+          <textarea name="message" rows="3" placeholder="e.g. We manufacture luxury handbags and want to add NFC/QR authentication..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Request Demo &rarr;</button>
+      </form>
+      <div class="success" id="successMsg">
+        <h3>✓ Demo Request Received!</h3>
+        <p>Our team will reach out within 1 business day to schedule your demo.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('demoForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form));
+      try {
+        await fetch('/api/demo', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+      } catch(err) { /* fallback */ }
+      form.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
