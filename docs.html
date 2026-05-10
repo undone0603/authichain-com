@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation - AuthiChain API</title>
+  <meta name="description" content="AuthiChain developer documentation. REST API reference, webhooks, SDK guides, and integration examples." />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0f; color: #e2e8f0; display: flex; min-height: 100vh; flex-direction: column; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; border-bottom: 1px solid #1e2a3a; background: rgba(10,10,15,0.95); position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #00d4ff; text-decoration: none; }
+    .nav-links a { color: #94a3b8; text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+    .layout { display: flex; flex: 1; }
+    .sidebar { width: 260px; min-height: calc(100vh - 64px); border-right: 1px solid #1e2a3a; padding: 2rem 0; position: sticky; top: 64px; overflow-y: auto; flex-shrink: 0; }
+    @media(max-width:768px) { .sidebar { display: none; } }
+    .sidebar-section { margin-bottom: 2rem; padding: 0 1.5rem; }
+    .sidebar-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #64748b; font-weight: 700; margin-bottom: 0.5rem; }
+    .sidebar-link { display: block; padding: 0.4rem 0.75rem; border-radius: 6px; color: #94a3b8; text-decoration: none; font-size: 0.875rem; margin-bottom: 0.15rem; transition: all 0.15s; }
+    .sidebar-link:hover, .sidebar-link.active { background: rgba(0,212,255,0.08); color: #00d4ff; }
+    .content { flex: 1; padding: 3rem; max-width: 880px; }
+    .content h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 0.5rem; }
+    .content h2 { font-size: 1.4rem; font-weight: 800; margin: 2.5rem 0 1rem; padding-top: 2rem; border-top: 1px solid #1e2a3a; color: #00d4ff; }
+    .content h3 { font-size: 1rem; font-weight: 700; margin: 1.5rem 0 0.5rem; }
+    .content p { color: #94a3b8; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; }
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-right: 0.5rem; }
+    .badge.get { background: rgba(34,197,94,0.1); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+    .badge.post { background: rgba(0,212,255,0.1); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); }
+    .badge.delete { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+    .endpoint { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+    .endpoint-path { font-family: monospace; font-size: 0.9rem; color: #e2e8f0; }
+    .endpoint-desc { color: #64748b; font-size: 0.85rem; margin-top: 0.4rem; }
+    pre { background: #050810; border: 1px solid #1e2a3a; border-radius: 8px; padding: 1.25rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem; color: #a5f3fc; }
+    .note { background: rgba(0,212,255,0.05); border-left: 3px solid #00d4ff; border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+    .note p { color: #cbd5e1; margin: 0; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid #1e2a3a; color: #64748b; font-size: 0.85rem; }
+    footer a { color: #00d4ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">AuthiChain</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/sdk">SDK</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/contact">Support</a>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Getting Started</div>
+        <a href="#overview" class="sidebar-link active">Overview</a>
+        <a href="#auth" class="sidebar-link">Authentication</a>
+        <a href="#quickstart" class="sidebar-link">Quickstart</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Core API</div>
+        <a href="#products" class="sidebar-link">Products</a>
+        <a href="#certificates" class="sidebar-link">Certificates</a>
+        <a href="#verify" class="sidebar-link">Verify</a>
+        <a href="#batch" class="sidebar-link">Batch</a>
+        <a href="#scan" class="sidebar-link">Scan</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Platform</div>
+        <a href="#analytics" class="sidebar-link">Analytics</a>
+        <a href="#webhooks" class="sidebar-link">Webhooks</a>
+        <a href="#nft" class="sidebar-link">NFT Certificates</a>
+        <a href="#sdk" class="sidebar-link">SDK</a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <h1 id="overview">AuthiChain API Documentation</h1>
+      <p>The AuthiChain REST API lets you create and manage product authentications, issue blockchain certificates, and verify product legitimacy programmatically.</p>
+
+      <div class="note"><p><strong>Base URL:</strong> <code>https://authichain.com/api</code></p></div>
+
+      <h2 id="auth">Authentication</h2>
+      <p>All API requests require an API key passed via the <code>x-api-key</code> header. Get your API key from the AuthiChain dashboard.</p>
+      <pre>curl -H "x-api-key: YOUR_API_KEY" \
+  https://authichain.com/api/health</pre>
+
+      <h2 id="quickstart">Quickstart</h2>
+      <p>Authenticate a product in 3 steps:</p>
+      <pre>// 1. Create a product
+POST /api/product
+{ "name": "Artisan Bag #001", "brand": "LuxBrand", "sku": "LB-001" }
+
+// 2. Issue certificate
+POST /api/certificate
+{ "productId": "prod_abc123" }
+
+// 3. Verify (consumer)
+GET /api/verify?id=prod_abc123</pre>
+
+      <h2 id="products">Products</h2>
+      <div class="endpoint">
+        <div><span class="badge post">POST</span><span class="endpoint-path">/api/product</span></div>
+        <div class="endpoint-desc">Register a new product for authentication</div>
+      </div>
+      <div class="endpoint">
+        <div><span class="badge get">GET</span><span class="endpoint-path">/api/product?id={productId}</span></div>
+        <div class="endpoint-desc">Retrieve product details and authentication status</div>
+      </div>
+
+      <h2 id="certificates">Certificates</h2>
+      <div class="endpoint">
+        <div><span class="badge post">POST</span><span class="endpoint-path">/api/certificate</span></div>
+        <div class="endpoint-desc">Issue a blockchain certificate for a product. Returns tx hash and certificate ID.</div>
+      </div>
+      <div class="endpoint">
+        <div><span class="badge get">GET</span><span class="endpoint-path">/api/certificate?id={certId}</span></div>
+        <div class="endpoint-desc">Retrieve certificate details including blockchain proof</div>
+      </div>
+
+      <h2 id="verify">Verify</h2>
+      <div class="endpoint">
+        <div><span class="badge get">GET</span><span class="endpoint-path">/api/verify?id={productId|certId|txHash}</span></div>
+        <div class="endpoint-desc">Public endpoint. Verify any product by ID, certificate ID, or transaction hash. No API key required.</div>
+      </div>
+
+      <h2 id="batch">Batch</h2>
+      <div class="endpoint">
+        <div><span class="badge post">POST</span><span class="endpoint-path">/api/batch</span></div>
+        <div class="endpoint-desc">Authenticate multiple products in a single request. Growth plan and above.</div>
+      </div>
+
+      <h2 id="webhooks">Webhooks</h2>
+      <p>Register webhook endpoints to receive real-time events: <code>product.created</code>, <code>certificate.issued</code>, <code>product.verified</code>, <code>scan.recorded</code>.</p>
+      <div class="endpoint">
+        <div><span class="badge post">POST</span><span class="endpoint-path">/api/webhook</span></div>
+        <div class="endpoint-desc">Register a new webhook endpoint</div>
+      </div>
+
+      <h2 id="sdk">SDK</h2>
+      <p>Install the AuthiChain JavaScript SDK for easier integration. See the <a href="/sdk" style="color:#00d4ff">SDK documentation</a> for full reference.</p>
+      <pre>npm install @authichain/sdk
+
+import AuthiChain from '@authichain/sdk';
+const client = new AuthiChain({ apiKey: 'YOUR_API_KEY' });
+const cert = await client.certificates.issue({ productId: 'prod_abc123' });</pre>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AuthiChain | <a href="/">Home</a> | <a href="/sdk">SDK</a> | <a href="/contact">Contact</a></p>
+  </footer>
+</body>
+</html>
