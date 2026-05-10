@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SDK - AuthiChain JavaScript SDK</title>
+  <meta name="description" content="Integrate AuthiChain into your application in minutes with our official JavaScript SDK. npm install @authichain/sdk" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0f; color: #e2e8f0; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; border-bottom: 1px solid #1e2a3a; background: rgba(10,10,15,0.95); position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #00d4ff; text-decoration: none; }
+    .nav-links a { color: #94a3b8; text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+    .hero { text-align: center; padding: 5rem 2rem 3rem; }
+    .hero h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; }
+    .hero h1 span { background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: #94a3b8; font-size: 1.05rem; margin-bottom: 2rem; }
+    .install-box { display: inline-flex; align-items: center; background: #050810; border: 1px solid #1e2a3a; border-radius: 8px; padding: 0.75rem 1.5rem; font-family: monospace; font-size: 1rem; gap: 1rem; color: #a5f3fc; }
+    .copy-btn { background: #1e2a3a; border: none; border-radius: 4px; color: #94a3b8; padding: 0.3rem 0.6rem; cursor: pointer; font-size: 0.8rem; }
+    .content { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+    h2 { font-size: 1.6rem; font-weight: 800; margin: 3rem 0 1.5rem; padding-top: 2rem; border-top: 1px solid #1e2a3a; }
+    h2:first-of-type { margin-top: 1rem; border-top: none; padding-top: 0; }
+    p { color: #94a3b8; line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; }
+    pre { background: #050810; border: 1px solid #1e2a3a; border-radius: 8px; padding: 1.5rem; overflow-x: auto; font-size: 0.875rem; line-height: 1.7; margin-bottom: 1.5rem; color: #a5f3fc; }
+    .method-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .method-card { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 10px; padding: 1.25rem; }
+    .method-name { font-family: monospace; color: #00d4ff; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .method-desc { color: #64748b; font-size: 0.85rem; }
+    .badge-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .badge { padding: 0.3rem 0.75rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+    .badge.green { background: rgba(34,197,94,0.1); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+    .badge.blue { background: rgba(0,212,255,0.1); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); }
+    footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid #1e2a3a; color: #64748b; font-size: 0.85rem; }
+    footer a { color: #00d4ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">AuthiChain</a>
+    <div class="nav-links">
+      <a href="/docs">Docs</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/contact">Support</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>AuthiChain <span>JavaScript SDK</span></h1>
+    <p>Integrate product authentication into your app in minutes. Works in Node.js, browsers, and edge runtimes.</p>
+    <div class="install-box">
+      <span>npm install @authichain/sdk</span>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('npm install @authichain/sdk')">Copy</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="badge-row">
+      <span class="badge green">TypeScript Ready</span>
+      <span class="badge blue">ESM &amp; CJS</span>
+      <span class="badge green">Node 18+</span>
+      <span class="badge blue">Edge Runtime</span>
+      <span class="badge green">Browser Compatible</span>
+    </div>
+
+    <h2>Quick Start</h2>
+    <pre>import AuthiChain from '@authichain/sdk';
+
+const client = new AuthiChain({
+  apiKey: process.env.AUTHICHAIN_API_KEY,
+  // Optional: baseUrl defaults to https://authichain.com/api
+});
+
+// Issue a certificate
+const cert = await client.certificates.issue({
+  productId: 'prod_abc123',
+  metadata: { color: 'midnight black', size: 'M' }
+});
+console.log(cert.txHash); // 0x...
+
+// Verify a product (no API key needed)
+const result = await client.verify('prod_abc123');
+console.log(result.authentic); // true</pre>
+
+    <h2>Authentication</h2>
+    <p>Pass your API key when instantiating the client. Get your key from the AuthiChain dashboard.</p>
+    <pre>const client = new AuthiChain({ apiKey: 'ac_live_...' });</pre>
+
+    <h2>SDK Methods</h2>
+    <div class="method-grid">
+      <div class="method-card"><div class="method-name">client.products.create(data)</div><div class="method-desc">Register a new product for authentication</div></div>
+      <div class="method-card"><div class="method-name">client.products.get(id)</div><div class="method-desc">Retrieve product details and status</div></div>
+      <div class="method-card"><div class="method-name">client.certificates.issue(data)</div><div class="method-desc">Issue a blockchain certificate</div></div>
+      <div class="method-card"><div class="method-name">client.certificates.get(id)</div><div class="method-desc">Retrieve certificate with blockchain proof</div></div>
+      <div class="method-card"><div class="method-name">client.verify(id)</div><div class="method-desc">Verify any product, cert, or tx hash</div></div>
+      <div class="method-card"><div class="method-name">client.batch.authenticate(ids)</div><div class="method-desc">Bulk authenticate multiple products</div></div>
+      <div class="method-card"><div class="method-name">client.analytics.get(opts)</div><div class="method-desc">Retrieve scan and verification analytics</div></div>
+      <div class="method-card"><div class="method-name">client.webhooks.register(url, events)</div><div class="method-desc">Register a webhook endpoint for events</div></div>
+    </div>
+
+    <h2>Batch Authentication</h2>
+    <pre>const results = await client.batch.authenticate([
+  { name: 'Item #001', sku: 'SKU-001' },
+  { name: 'Item #002', sku: 'SKU-002' },
+  // ... up to 1,000 items per request
+]);
+results.forEach(r => console.log(r.certId, r.txHash));</pre>
+
+    <h2>Webhooks</h2>
+    <pre>await client.webhooks.register(
+  'https://yourapp.com/webhooks/authichain',
+  ['product.verified', 'certificate.issued', 'scan.recorded']
+);</pre>
+
+    <h2>TypeScript</h2>
+    <p>The SDK ships with full TypeScript types. No <code>@types</code> package needed.</p>
+    <pre>import AuthiChain, { Certificate, VerifyResult } from '@authichain/sdk';
+
+const cert: Certificate = await client.certificates.issue({ productId: 'prod_abc123' });
+const result: VerifyResult = await client.verify('prod_abc123');</pre>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AuthiChain | <a href="/docs">API Docs</a> | <a href="/pricing">Pricing</a> | <a href="/contact">Support</a></p>
+  </footer>
+</body>
+</html>
