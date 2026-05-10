@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog - AuthiChain | Product Authentication Insights</title>
+  <meta name="description" content="AuthiChain blog: insights on blockchain product authentication, brand protection, anti-counterfeiting, and supply chain integrity." />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0f; color: #e2e8f0; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; border-bottom: 1px solid #1e2a3a; background: rgba(10,10,15,0.95); position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #00d4ff; text-decoration: none; }
+    .nav-links a { color: #94a3b8; text-decoration: none; margin-left: 2rem; font-size: 0.9rem; }
+    .hero { text-align: center; padding: 4rem 2rem 3rem; }
+    .hero h1 { font-size: 2.5rem; font-weight: 900; background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+    .hero p { color: #94a3b8; font-size: 1.05rem; }
+    .blog-grid { max-width: 1100px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+    .post-card { background: #0f1623; border: 1px solid #1e2a3a; border-radius: 16px; overflow: hidden; transition: border-color 0.3s, transform 0.2s; }
+    .post-card:hover { border-color: #00d4ff; transform: translateY(-2px); }
+    .post-img { height: 180px; background: linear-gradient(135deg, #0a0f1e, #1e2a3a); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+    .post-body { padding: 1.5rem; }
+    .post-tag { font-size: 0.7rem; color: #00d4ff; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 0.5rem; }
+    .post-title { font-size: 1.1rem; font-weight: 800; line-height: 1.4; margin-bottom: 0.75rem; }
+    .post-excerpt { color: #64748b; font-size: 0.875rem; line-height: 1.6; margin-bottom: 1rem; }
+    .post-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #475569; }
+    .post-read { color: #00d4ff; text-decoration: none; font-weight: 600; }
+    .newsletter { background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(124,58,237,0.05)); border: 1px solid #1e2a3a; border-radius: 16px; max-width: 600px; margin: 2rem auto 4rem; padding: 2.5rem; text-align: center; }
+    .newsletter h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .newsletter p { color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .newsletter-form { display: flex; gap: 0.75rem; }
+    .newsletter-form input { flex: 1; background: #0a0a0f; border: 1px solid #1e2a3a; border-radius: 8px; padding: 0.75rem 1rem; color: #e2e8f0; font-size: 0.9rem; outline: none; }
+    .newsletter-form input:focus { border-color: #00d4ff; }
+    .newsletter-form button { background: #00d4ff; color: #000; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid #1e2a3a; color: #64748b; font-size: 0.85rem; }
+    footer a { color: #00d4ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">AuthiChain</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/docs">Docs</a>
+      <a href="/demo">Demo</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>The AuthiChain Blog</h1>
+    <p>Insights on blockchain authentication, brand protection, and supply chain integrity.</p>
+  </div>
+
+  <div class="blog-grid">
+    <div class="post-card">
+      <div class="post-img">🔗</div>
+      <div class="post-body">
+        <div class="post-tag">Authentication</div>
+        <div class="post-title">Why Blockchain Certificates Are the Future of Product Authentication</div>
+        <div class="post-excerpt">QR codes and holograms are no longer enough. Here's why immutable blockchain records are becoming the new standard for brand protection.</div>
+        <div class="post-meta"><span>May 2025</span><a href="#" class="post-read">Read more &rarr;</a></div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-img">💼</div>
+      <div class="post-body">
+        <div class="post-tag">Brand Protection</div>
+        <div class="post-title">The $4.5 Trillion Counterfeiting Problem and How Brands Are Fighting Back</div>
+        <div class="post-excerpt">Counterfeiting costs the global economy trillions annually. We break down the threat and the blockchain-powered solutions emerging to stop it.</div>
+        <div class="post-meta"><span>Apr 2025</span><a href="#" class="post-read">Read more &rarr;</a></div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-img">💊</div>
+      <div class="post-body">
+        <div class="post-tag">Pharma</div>
+        <div class="post-title">Pharmaceutical Authentication: How AuthiChain Secures the Drug Supply Chain</div>
+        <div class="post-excerpt">Counterfeit medications kill hundreds of thousands annually. AuthiChain's solution ensures every drug reaches consumers with a verified certificate.</div>
+        <div class="post-meta"><span>Apr 2025</span><a href="#" class="post-read">Read more &rarr;</a></div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-img">🌿</div>
+      <div class="post-body">
+        <div class="post-tag">Cannabis</div>
+        <div class="post-title">StrainChain + AuthiChain: Blockchain Compliance for the Cannabis Industry</div>
+        <div class="post-excerpt">How cannabis brands and dispensaries are using blockchain certificates to meet compliance requirements and build consumer trust.</div>
+        <div class="post-meta"><span>Mar 2025</span><a href="#" class="post-read">Read more &rarr;</a></div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-img">🔐</div>
+      <div class="post-body">
+        <div class="post-tag">Developer</div>
+        <div class="post-title">Integrating AuthiChain in Under 10 Minutes: A Developer's Guide</div>
+        <div class="post-excerpt">Step-by-step guide to integrating the AuthiChain API and SDK into your existing product management system in under 10 minutes.</div>
+        <div class="post-meta"><span>Mar 2025</span><a href="#" class="post-read">Read more &rarr;</a></div>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-img">🏆</div>
+      <div class="post-body">
+        <div class="post-tag">Loyalty</div>
+        <div class="post-title">Beyond Authentication: How Brands Use QR Scans to Drive Customer Loyalty</div>
+        <div class="post-excerpt">Product verification isn't just about fighting counterfeits. It's also a powerful touchpoint for building customer loyalty with rewards and milestones.</div>
+        <div class="post-meta"><span>Feb 2025</span><a href="#" class="post-read">Read more &rarr;</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 0 2rem 4rem;">
+    <div class="newsletter">
+      <h2>Stay in the Loop</h2>
+      <p>Get the latest insights on blockchain authentication, brand protection, and supply chain technology.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="your@email.com" />
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AuthiChain | <a href="/">Home</a> | <a href="/pricing">Pricing</a> | <a href="/contact">Contact</a></p>
+  </footer>
+</body>
+</html>
